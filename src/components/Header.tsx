@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Mail, Zap, RefreshCw } from "lucide-react";
 import tempMailLogo from "@/assets/tempmail-logo.png";
 
 const Header = () => {
@@ -27,18 +25,6 @@ const Header = () => {
               FAQ
             </a>
           </nav>
-
-          {/* Action Buttons */}
-          <div className="flex items-center space-x-3">
-            <Button variant="outline" size="sm" className="hidden sm:flex">
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh
-            </Button>
-            <Button className="bg-gradient-primary hover:shadow-glow transition-smooth">
-              <Zap className="w-4 h-4 mr-2" />
-              Premium
-            </Button>
-          </div>
         </div>
       </div>
     </header>
