@@ -35,33 +35,33 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="py-20">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16 animate-slide-up">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+    <section id="features" className="py-12 sm:py-16 lg:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 sm:mb-16 animate-slide-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Why Choose <span className="bg-gradient-hero bg-clip-text text-transparent">BravoMail</span>?
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
             The most advanced temporary email service with enterprise-grade security and lightning-fast performance.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group p-8 bg-gradient-card border border-border/10 rounded-xl hover:border-primary/20 transition-smooth hover:shadow-soft animate-slide-up"
+              className="group p-6 sm:p-8 bg-gradient-card border border-border/10 rounded-xl hover:border-primary/20 transition-smooth hover:shadow-soft animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="w-14 h-14 bg-gradient-primary rounded-xl flex items-center justify-center mb-6 group-hover:shadow-glow transition-smooth">
-                <feature.icon className="w-7 h-7 text-white" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-primary rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:shadow-glow transition-smooth">
+                <feature.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               </div>
               
-              <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-smooth">
+              <h3 className="text-lg sm:text-xl font-semibold mb-3 group-hover:text-primary transition-smooth">
                 {feature.title}
               </h3>
               
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                 {feature.description}
               </p>
             </div>
@@ -69,7 +69,7 @@ const Features = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="mt-16 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           {[
             { number: "10M+", label: "Emails Generated" },
             { number: "500K+", label: "Active Users" },
@@ -77,10 +77,10 @@ const Features = () => {
             { number: "0", label: "Data Stored" }
           ].map((stat, index) => (
             <div key={index} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
                 {stat.number}
               </div>
-              <div className="text-muted-foreground">
+              <div className="text-sm sm:text-base text-muted-foreground">
                 {stat.label}
               </div>
             </div>
