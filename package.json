@@ -1,5 +1,6 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "bravo-mail",
+  "description": "BravoMail - Secure temporary email service for privacy protection",
   "private": true,
   "version": "0.0.0",
   "type": "module",

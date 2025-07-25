@@ -1,8 +1,10 @@
-# Welcome to your Lovable project
+# BravoMail - Secure Temporary Email Service
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/009b8778-63dd-45e5-af8b-a375a3fdec46
+
+BravoMail is a professional temporary email service that provides instant, secure disposable email addresses. Protect your privacy and avoid spam with our auto-expiring email system.
 
 ## How can I edit this code?
 
