@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="flex items-center space-x-3">
               <img src={tempMailLogo} alt="BravoMail" className="w-8 h-8" />
               <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                2025 BravoMail
+                BravoMail
               </span>
             </div>
             <p className="text-muted-foreground leading-relaxed">
