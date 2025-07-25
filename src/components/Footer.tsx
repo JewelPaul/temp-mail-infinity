@@ -9,13 +9,13 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <img src={tempMailLogo} alt="TempMail" className="w-8 h-8" />
+              <img src={tempMailLogo} alt="BravoMail" className="w-8 h-8" />
               <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                TempMail Pro
+                BravoMail
               </span>
             </div>
             <p className="text-muted-foreground leading-relaxed">
-              The most secure and reliable temporary email service. Protect your privacy with instant disposable emails.
+              The most secure and reliable temporary email service. Protect your privacy with BravoMail instant disposable emails.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-muted-foreground hover:text-primary transition-smooth">
@@ -67,7 +67,7 @@ const Footer = () => {
         <div className="border-t border-border/10 mt-12 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <p className="text-muted-foreground text-sm">
-              © 2024 TempMail Pro. All rights reserved.
+              © 2024 BravoMail. All rights reserved.
             </p>
             <p className="text-muted-foreground text-sm flex items-center">
               Made with <Heart className="w-4 h-4 mx-1 text-red-500" /> for privacy
