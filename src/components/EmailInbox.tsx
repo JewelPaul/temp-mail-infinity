@@ -1,163 +1,205 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Mail, Clock, ExternalLink, Trash2, RefreshCw } from "lucide-react";
+import { RefreshCw, ExternalLink, Trash2, Inbox, AlertCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { mailApi, EmailAccount, EmailMessage } from "@/services/mailApi";
 
-interface Email {
-  id: string;
-  from: string;
-  subject: string;
-  preview: string;
-  timestamp: string;
-  isRead: boolean;
+interface EmailInboxProps {
+  currentAccount: EmailAccount | null;
 }
 
-const EmailInbox = () => {
-  const [emails, setEmails] = useState<Email[]>([
-    {
-      id: "1",
-      from: "noreply@github.com",
-      subject: "Verify your account",
-      preview: "Please click the link below to verify your GitHub account...",
-      timestamp: "2 min ago",
-      isRead: false,
-    },
-    {
-      id: "2", 
-      from: "team@figma.com",
-      subject: "Welcome to Figma!",
-      preview: "Thanks for signing up! Here's how to get started with Figma...",
-      timestamp: "5 min ago",
-      isRead: false,
-    },
-    {
-      id: "3",
-      from: "security@discord.com",
-      subject: "New login detected",
-      preview: "We detected a new login to your Discord account from...",
-      timestamp: "12 min ago",
-      isRead: true,
-    },
-  ]);
-
+const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
+  const [emails, setEmails] = useState<EmailMessage[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [error, setError] = useState<string>("");
+  const { toast } = useToast();
 
-  const refreshInbox = () => {
+  // Auto-refresh emails every 10 seconds when account is available
+  useEffect(() => {
+    if (!currentAccount) {
+      setEmails([]);
+      return;
+    }
+
+    const fetchEmails = async () => {
+      try {
+        setError("");
+        const messages = await mailApi.getMessages();
+        setEmails(messages);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to fetch emails";
+        setError(errorMessage);
+      }
+    };
+
+    // Initial fetch
+    fetchEmails();
+
+    // Set up auto-refresh
+    const interval = setInterval(fetchEmails, 10000);
+    
+    return () => clearInterval(interval);
+  }, [currentAccount]);
+
+  const refreshInbox = async () => {
+    if (!currentAccount) return;
+    
     setIsRefreshing(true);
-    setTimeout(() => {
+    setError("");
+    
+    try {
+      const messages = await mailApi.getMessages();
+      setEmails(messages);
+      
+      toast({
+        title: "Inbox refreshed",
+        description: `Found ${messages.length} emails.`,
+      });
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to refresh inbox";
+      setError(errorMessage);
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
       setIsRefreshing(false);
-    }, 1500);
+    }
   };
 
-  const markAsRead = (id: string) => {
-    setEmails(emails.map(email => 
-      email.id === id ? { ...email, isRead: true } : email
-    ));
+  const formatTimestamp = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / (1000 * 60));
+    
+    if (diffMins < 1) return "Just now";
+    if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+    
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+    
+    return date.toLocaleDateString();
   };
-
-  const deleteEmail = (id: string) => {
-    setEmails(emails.filter(email => email.id !== id));
-  };
-
-  const unreadCount = emails.filter(email => !email.isRead).length;
 
   return (
     <div className="w-full max-w-4xl mx-auto">
       <Card className="bg-gradient-card border-border/20 shadow-intense">
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <CardTitle className="text-2xl">Inbox</CardTitle>
-              {unreadCount > 0 && (
-                <Badge className="bg-primary text-primary-foreground">
-                  {unreadCount} new
-                </Badge>
-              )}
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+              <Inbox className="w-5 h-5 text-primary" />
             </div>
-            <Button
-              onClick={refreshInbox}
-              variant="outline"
-              size="sm"
-              disabled={isRefreshing}
-              className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth"
-            >
-              <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-              {isRefreshing ? 'Checking...' : 'Refresh'}
-            </Button>
+            <div>
+              <CardTitle className="text-xl">Email Inbox</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                {currentAccount ? `${emails.filter(email => !email.seen).length} unread messages` : 'Generate an email to start receiving messages'}
+              </p>
+            </div>
           </div>
+          
+          <Button
+            onClick={refreshInbox}
+            disabled={isRefreshing || !currentAccount}
+            variant="outline"
+            size="sm"
+            className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth"
+          >
+            <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
         </CardHeader>
-        
-        <CardContent className="space-y-2">
-          {emails.length === 0 ? (
+
+        <CardContent>
+          {/* Error Display */}
+          {error && (
+            <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg mb-4">
+              <AlertCircle className="w-4 h-4 text-destructive" />
+              <p className="text-sm text-destructive">{error}</p>
+            </div>
+          )}
+
+          {!currentAccount ? (
             <div className="text-center py-12">
-              <div className="w-16 h-16 bg-muted/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="w-8 h-8 text-muted-foreground" />
-              </div>
+              <Inbox className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+              <h3 className="text-lg font-semibold mb-2">No active email</h3>
+              <p className="text-muted-foreground">
+                Generate a temporary email address to start receiving messages
+              </p>
+            </div>
+          ) : emails.length === 0 ? (
+            <div className="text-center py-12">
+              <Inbox className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
               <h3 className="text-lg font-semibold mb-2">No emails yet</h3>
               <p className="text-muted-foreground">
-                Emails sent to your temporary address will appear here
+                Your inbox is empty. New emails will appear here automatically.
               </p>
             </div>
           ) : (
-            emails.map((email) => (
-              <div
-                key={email.id}
-                className={`group p-4 rounded-lg border transition-smooth cursor-pointer ${
-                  email.isRead 
-                    ? 'bg-background/30 border-border/10 hover:bg-background/50' 
-                    : 'bg-primary/5 border-primary/20 hover:bg-primary/10'
-                }`}
-                onClick={() => markAsRead(email.id)}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-2 mb-1">
-                      <span className={`font-semibold ${email.isRead ? 'text-foreground' : 'text-primary'}`}>
-                        {email.from}
-                      </span>
-                      {!email.isRead && (
-                        <div className="w-2 h-2 bg-primary rounded-full animate-pulse-glow" />
-                      )}
+            <div className="space-y-3">
+              {emails.map((email) => (
+                <div
+                  key={email.id}
+                  className={`group p-4 rounded-lg border border-border/20 transition-all hover:shadow-md hover:border-primary/20 cursor-pointer ${
+                    email.seen ? 'bg-background/30' : 'bg-background/60 border-primary/30'
+                  }`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="font-medium text-sm truncate">{email.from.address}</p>
+                        {!email.seen && (
+                          <Badge variant="secondary" className="text-xs">New</Badge>
+                        )}
+                      </div>
+                      <h4 className="font-semibold text-sm mb-2 truncate">{email.subject}</h4>
+                      <p className="text-sm text-muted-foreground line-clamp-2">{email.intro}</p>
+                      <p className="text-xs text-muted-foreground mt-2">{formatTimestamp(email.createdAt)}</p>
                     </div>
                     
-                    <h4 className={`font-medium mb-1 ${email.isRead ? 'text-foreground' : 'text-foreground'}`}>
-                      {email.subject}
-                    </h4>
-                    
-                    <p className="text-sm text-muted-foreground truncate">
-                      {email.preview}
-                    </p>
-                    
-                    <div className="flex items-center space-x-2 mt-2">
-                      <Clock className="w-3 h-3 text-muted-foreground" />
-                      <span className="text-xs text-muted-foreground">{email.timestamp}</span>
+                    <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 hover:bg-primary/10"
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          try {
+                            const content = await mailApi.getMessage(email.id);
+                            // Open email content in a new tab or modal
+                            const newWindow = window.open('', '_blank');
+                            if (newWindow) {
+                              newWindow.document.write(`
+                                <html>
+                                  <head><title>${content.subject}</title></head>
+                                  <body style="font-family: Arial, sans-serif; padding: 20px;">
+                                    <h2>${content.subject}</h2>
+                                    <p><strong>From:</strong> ${content.from.address}</p>
+                                    <hr>
+                                    ${content.html?.join('') || content.text || content.intro}
+                                  </body>
+                                </html>
+                              `);
+                            }
+                          } catch (err) {
+                            toast({
+                              title: "Error",
+                              description: "Failed to open email",
+                              variant: "destructive",
+                            });
+                          }
+                        }}
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                      </Button>
                     </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-smooth">
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="h-8 w-8 p-0 hover:bg-primary/20"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="h-8 w-8 p-0 hover:bg-destructive/20 hover:text-destructive"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteEmail(email.id);
-                      }}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
                   </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </CardContent>
       </Card>

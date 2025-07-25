@@ -1,34 +1,74 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Copy, RefreshCw, Mail, Clock, Shield } from "lucide-react";
+import { Copy, RefreshCw, Mail, Clock, Shield, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { mailApi, EmailAccount } from "@/services/mailApi";
 
-const EmailGenerator = () => {
-  const [currentEmail, setCurrentEmail] = useState("user123@tempmail.pro");
+interface EmailGeneratorProps {
+  onEmailChange?: (account: EmailAccount | null) => void;
+}
+
+const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
+  const [currentAccount, setCurrentAccount] = useState<EmailAccount | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [error, setError] = useState<string>("");
   const { toast } = useToast();
 
-  const generateNewEmail = () => {
+  // Generate initial email on component mount
+  useEffect(() => {
+    generateNewEmail();
+  }, []);
+
+  const generateNewEmail = async () => {
     setIsGenerating(true);
-    setTimeout(() => {
-      const randomString = Math.random().toString(36).substring(2, 10);
-      setCurrentEmail(`${randomString}@tempmail.pro`);
-      setIsGenerating(false);
+    setError("");
+    
+    try {
+      // Delete previous account if exists
+      if (currentAccount) {
+        await mailApi.deleteAccount();
+      }
+      
+      // Create new account
+      const newAccount = await mailApi.createAccount();
+      setCurrentAccount(newAccount);
+      onEmailChange?.(newAccount);
+      
       toast({
         title: "New email generated!",
         description: "Your temporary email is ready to use.",
       });
-    }, 1000);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to generate email";
+      setError(errorMessage);
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(currentEmail);
-    toast({
-      title: "Copied!",
-      description: "Email address copied to clipboard.",
-    });
+  const copyToClipboard = async () => {
+    if (!currentAccount) return;
+    
+    try {
+      await navigator.clipboard.writeText(currentAccount.address);
+      toast({
+        title: "Copied!",
+        description: "Email address copied to clipboard.",
+      });
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "Failed to copy to clipboard",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -52,14 +92,22 @@ const EmailGenerator = () => {
           <div className="space-y-6">
             <div className="text-center">
               <h2 className="text-2xl font-semibold mb-2">Your Temporary Email</h2>
-              <p className="text-muted-foreground">Valid for 60 minutes • Auto-refreshes</p>
+              <p className="text-muted-foreground">Valid for 10 minutes • Real email service</p>
             </div>
+
+            {/* Error Display */}
+            {error && (
+              <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                <AlertCircle className="w-4 h-4 text-destructive" />
+                <p className="text-sm text-destructive">{error}</p>
+              </div>
+            )}
 
             {/* Email Display */}
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
                 <Input
-                  value={currentEmail}
+                  value={currentAccount?.address || "Generating..."}
                   readOnly
                   className="text-lg font-mono text-center bg-background/50 border-border/20 focus:border-primary transition-smooth"
                 />
@@ -69,6 +117,7 @@ const EmailGenerator = () => {
                 <Button
                   onClick={copyToClipboard}
                   variant="outline"
+                  disabled={!currentAccount || isGenerating}
                   className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth"
                 >
                   <Copy className="w-4 h-4 mr-2" />
@@ -93,7 +142,7 @@ const EmailGenerator = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold">Auto-Expiry</h3>
-                  <p className="text-sm text-muted-foreground">Emails auto-delete after 60 minutes</p>
+                  <p className="text-sm text-muted-foreground">Emails auto-delete after 10 minutes</p>
                 </div>
               </div>
               
