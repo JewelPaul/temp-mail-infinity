@@ -72,27 +72,27 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6 sm:space-y-8">
+    <div className="w-full max-w-4xl mx-auto space-y-8">
       {/* Hero Section */}
-      <div className="text-center space-y-4 sm:space-y-6 animate-slide-up">
-        <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-primary rounded-full shadow-glow mb-4">
-          <Mail className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+      <div className="text-center space-y-6 animate-slide-up">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-full shadow-glow mb-4">
+          <Mail className="w-8 h-8 text-white" />
         </div>
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-hero bg-clip-text text-transparent leading-tight">
+        <h1 className="text-6xl font-bold bg-gradient-hero bg-clip-text text-transparent leading-tight">
           Instant Temporary Email
         </h1>
-        <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-4">
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
           Generate unlimited temporary email addresses instantly. Keep your real email private and secure from spam.
         </p>
       </div>
 
       {/* Email Generator Card */}
       <Card className="bg-gradient-card border-border/20 shadow-intense">
-        <CardContent className="p-4 sm:p-6 lg:p-8">
-          <div className="space-y-4 sm:space-y-6">
+        <CardContent className="p-8">
+          <div className="space-y-6">
             <div className="text-center">
-              <h2 className="text-xl sm:text-2xl font-semibold mb-2">Your Temporary Email</h2>
-              <p className="text-sm sm:text-base text-muted-foreground">Valid for 10 minutes • Real email service</p>
+              <h2 className="text-2xl font-semibold mb-2">Your Temporary Email</h2>
+              <p className="text-base text-muted-foreground">Valid for 10 minutes • Real email service</p>
             </div>
 
             {/* Error Display */}
@@ -104,21 +104,21 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
             )}
 
             {/* Email Display */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-row gap-3">
               <div className="relative flex-1">
                 <Input
                   value={currentAccount?.address || "Generating..."}
                   readOnly
-                  className="text-base sm:text-lg font-mono text-center bg-background/50 border-border/20 focus:border-primary transition-smooth h-12 sm:h-14"
+                  className="text-lg font-mono text-center bg-background/50 border-border/20 focus:border-primary transition-smooth h-14"
                 />
                 <div className="absolute inset-0 bg-gradient-primary opacity-10 rounded-md pointer-events-none" />
               </div>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-row gap-3">
                 <Button
                   onClick={copyToClipboard}
                   variant="outline"
                   disabled={!currentAccount || isGenerating}
-                  className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth h-12 sm:h-auto min-h-[44px] text-base"
+                  className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth"
                 >
                   <Copy className="w-4 h-4 mr-2" />
                   Copy
@@ -126,7 +126,7 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
                 <Button
                   onClick={generateNewEmail}
                   disabled={isGenerating}
-                  className="bg-gradient-primary hover:shadow-glow transition-smooth h-12 sm:h-auto min-h-[44px] text-base"
+                  className="bg-gradient-primary hover:shadow-glow transition-smooth"
                 >
                   <RefreshCw className={`w-4 h-4 mr-2 ${isGenerating ? 'animate-spin' : ''}`} />
                   {isGenerating ? 'Generating...' : 'New Email'}
@@ -135,34 +135,34 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
             </div>
 
             {/* Features */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4 sm:pt-6">
-              <div className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg bg-background/30 border border-border/10">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+            <div className="grid grid-cols-3 gap-4 pt-6">
+              <div className="flex items-center space-x-3 p-4 rounded-lg bg-background/30 border border-border/10">
+                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-primary" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-sm sm:text-base">Auto-Expiry</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Emails auto-delete after 10 minutes</p>
+                  <h3 className="font-semibold text-base">Auto-Expiry</h3>
+                  <p className="text-sm text-muted-foreground">Emails auto-delete after 10 minutes</p>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg bg-background/30 border border-border/10">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+              <div className="flex items-center space-x-3 p-4 rounded-lg bg-background/30 border border-border/10">
+                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-5 h-5 text-primary" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-sm sm:text-base">Privacy First</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground">No registration or personal data</p>
+                  <h3 className="font-semibold text-base">Privacy First</h3>
+                  <p className="text-sm text-muted-foreground">No registration or personal data</p>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg bg-background/30 border border-border/10 sm:col-span-2 lg:col-span-1">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+              <div className="flex items-center space-x-3 p-4 rounded-lg bg-background/30 border border-border/10">
+                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <RefreshCw className="w-5 h-5 text-primary" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-sm sm:text-base">Unlimited</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Generate as many as you need</p>
+                  <h3 className="font-semibold text-base">Unlimited</h3>
+                  <p className="text-sm text-muted-foreground">Generate as many as you need</p>
                 </div>
               </div>
             </div>
