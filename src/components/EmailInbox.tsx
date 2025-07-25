@@ -88,14 +88,14 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
   return (
     <div className="w-full max-w-4xl mx-auto">
       <Card className="bg-gradient-card border-border/20 shadow-intense">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6">
+        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0 pb-4 sm:pb-6">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
-              <Inbox className="w-5 h-5 text-primary" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+              <Inbox className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
             </div>
-            <div>
-              <CardTitle className="text-xl">Email Inbox</CardTitle>
-              <p className="text-sm text-muted-foreground">
+            <div className="min-w-0">
+              <CardTitle className="text-lg sm:text-xl">Email Inbox</CardTitle>
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 {currentAccount ? `${emails.filter(email => !email.seen).length} unread messages` : 'Generate an email to start receiving messages'}
               </p>
             </div>
@@ -106,35 +106,35 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
             disabled={isRefreshing || !currentAccount}
             variant="outline"
             size="sm"
-            className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth"
+            className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth min-h-[44px] w-full sm:w-auto"
           >
             <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
             Refresh
           </Button>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="p-4 sm:p-6">
           {/* Error Display */}
           {error && (
             <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg mb-4">
-              <AlertCircle className="w-4 h-4 text-destructive" />
+              <AlertCircle className="w-4 h-4 text-destructive flex-shrink-0" />
               <p className="text-sm text-destructive">{error}</p>
             </div>
           )}
 
           {!currentAccount ? (
-            <div className="text-center py-12">
-              <Inbox className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-              <h3 className="text-lg font-semibold mb-2">No active email</h3>
-              <p className="text-muted-foreground">
+            <div className="text-center py-8 sm:py-12">
+              <Inbox className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+              <h3 className="text-base sm:text-lg font-semibold mb-2">No active email</h3>
+              <p className="text-sm sm:text-base text-muted-foreground px-4">
                 Generate a temporary email address to start receiving messages
               </p>
             </div>
           ) : emails.length === 0 ? (
-            <div className="text-center py-12">
-              <Inbox className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-              <h3 className="text-lg font-semibold mb-2">No emails yet</h3>
-              <p className="text-muted-foreground">
+            <div className="text-center py-8 sm:py-12">
+              <Inbox className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+              <h3 className="text-base sm:text-lg font-semibold mb-2">No emails yet</h3>
+              <p className="text-sm sm:text-base text-muted-foreground px-4">
                 Your inbox is empty. New emails will appear here automatically.
               </p>
             </div>
@@ -147,24 +147,24 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
                     email.seen ? 'bg-background/30' : 'bg-background/60 border-primary/30'
                   }`}
                 >
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
                         <p className="font-medium text-sm truncate">{email.from.address}</p>
                         {!email.seen && (
                           <Badge variant="secondary" className="text-xs">New</Badge>
                         )}
                       </div>
-                      <h4 className="font-semibold text-sm mb-2 truncate">{email.subject}</h4>
-                      <p className="text-sm text-muted-foreground line-clamp-2">{email.intro}</p>
+                      <h4 className="font-semibold text-sm sm:text-base mb-2 truncate">{email.subject}</h4>
+                      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">{email.intro}</p>
                       <p className="text-xs text-muted-foreground mt-2">{formatTimestamp(email.createdAt)}</p>
                     </div>
                     
-                    <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex items-center gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-8 w-8 p-0 hover:bg-primary/10"
+                        className="h-10 w-10 sm:h-8 sm:w-8 p-0 hover:bg-primary/10 min-h-[44px] sm:min-h-[32px]"
                         onClick={async (e) => {
                           e.stopPropagation();
                           try {
@@ -193,7 +193,7 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
                           }
                         }}
                       >
-                        <ExternalLink className="w-3 h-3" />
+                        <ExternalLink className="w-3 h-3 sm:w-3 sm:h-3" />
                       </Button>
                     </div>
                   </div>
