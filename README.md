@@ -53,7 +53,6 @@
 ### 🛡️ **Privacy Protection**
 - **No Logging**: We don't track or store user activities
 - **Anonymous Usage**: No personal information required
-- **GDPR Compliant**: Full compliance with privacy regulations
 - **Data Minimization**: Collect only what's absolutely necessary
 - **Automatic Cleanup**: Regular purging of all data
 
@@ -140,7 +139,6 @@ BravoMail offers enterprise-grade solutions for businesses requiring secure temp
 
 - **🛡️ SOC 2 Compliant**: Industry-standard security compliance
 - **🔐 ISO 27001 Certified**: Information security management
-- **🌍 GDPR Compliant**: European privacy regulation compliance
 - **🔍 Regular Audits**: Third-party security assessments
 - **⚡ Real-Time Monitoring**: 24/7 security monitoring
 - **🚨 Incident Response**: Rapid security incident response team
