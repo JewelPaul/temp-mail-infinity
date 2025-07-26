@@ -78,7 +78,7 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
         <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-full shadow-glow mb-4">
           <Mail className="w-8 h-8 text-white" />
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold bg-gradient-hero bg-clip-text text-transparent">
+        <h1 className="text-6xl font-bold bg-gradient-hero bg-clip-text text-transparent leading-tight">
           Instant Temporary Email
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -92,28 +92,28 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
           <div className="space-y-6">
             <div className="text-center">
               <h2 className="text-2xl font-semibold mb-2">Your Temporary Email</h2>
-              <p className="text-muted-foreground">Valid for 10 minutes • Real email service</p>
+              <p className="text-base text-muted-foreground">Valid for 10 minutes • Real email service</p>
             </div>
 
             {/* Error Display */}
             {error && (
               <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
-                <AlertCircle className="w-4 h-4 text-destructive" />
+                <AlertCircle className="w-4 h-4 text-destructive flex-shrink-0" />
                 <p className="text-sm text-destructive">{error}</p>
               </div>
             )}
 
             {/* Email Display */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-row gap-3">
               <div className="relative flex-1">
                 <Input
                   value={currentAccount?.address || "Generating..."}
                   readOnly
-                  className="text-lg font-mono text-center bg-background/50 border-border/20 focus:border-primary transition-smooth"
+                  className="text-lg font-mono text-center bg-background/50 border-border/20 focus:border-primary transition-smooth h-14"
                 />
                 <div className="absolute inset-0 bg-gradient-primary opacity-10 rounded-md pointer-events-none" />
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-row gap-3">
                 <Button
                   onClick={copyToClipboard}
                   variant="outline"
@@ -135,33 +135,33 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
             </div>
 
             {/* Features */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6">
+            <div className="grid grid-cols-3 gap-4 pt-6">
               <div className="flex items-center space-x-3 p-4 rounded-lg bg-background/30 border border-border/10">
-                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
                   <Clock className="w-5 h-5 text-primary" />
                 </div>
-                <div>
-                  <h3 className="font-semibold">Auto-Expiry</h3>
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-base">Auto-Expiry</h3>
                   <p className="text-sm text-muted-foreground">Emails auto-delete after 10 minutes</p>
                 </div>
               </div>
               
               <div className="flex items-center space-x-3 p-4 rounded-lg bg-background/30 border border-border/10">
-                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
                   <Shield className="w-5 h-5 text-primary" />
                 </div>
-                <div>
-                  <h3 className="font-semibold">Privacy First</h3>
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-base">Privacy First</h3>
                   <p className="text-sm text-muted-foreground">No registration or personal data</p>
                 </div>
               </div>
               
               <div className="flex items-center space-x-3 p-4 rounded-lg bg-background/30 border border-border/10">
-                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
                   <RefreshCw className="w-5 h-5 text-primary" />
                 </div>
-                <div>
-                  <h3 className="font-semibold">Unlimited</h3>
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-base">Unlimited</h3>
                   <p className="text-sm text-muted-foreground">Generate as many as you need</p>
                 </div>
               </div>

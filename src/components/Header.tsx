@@ -14,7 +14,7 @@ const Header = () => {
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="flex items-center space-x-6">
             <a href="#features" className="text-muted-foreground hover:text-primary transition-smooth">
               Features
             </a>

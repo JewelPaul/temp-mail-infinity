@@ -36,9 +36,9 @@ const Features = () => {
 
   return (
     <section id="features" className="py-20">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-8">
         <div className="text-center mb-16 animate-slide-up">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-4xl font-bold mb-4">
             Why Choose <span className="bg-gradient-hero bg-clip-text text-transparent">BravoMail</span>?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -46,7 +46,7 @@ const Features = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
@@ -61,7 +61,7 @@ const Features = () => {
                 {feature.title}
               </h3>
               
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-base text-muted-foreground leading-relaxed">
                 {feature.description}
               </p>
             </div>
@@ -69,7 +69,7 @@ const Features = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="mt-20 grid grid-cols-4 gap-8">
           {[
             { number: "10M+", label: "Emails Generated" },
             { number: "500K+", label: "Active Users" },
@@ -77,10 +77,10 @@ const Features = () => {
             { number: "0", label: "Data Stored" }
           ].map((stat, index) => (
             <div key={index} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
+              <div className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
                 {stat.number}
               </div>
-              <div className="text-muted-foreground">
+              <div className="text-base text-muted-foreground">
                 {stat.label}
               </div>
             </div>
