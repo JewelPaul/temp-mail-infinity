@@ -147,7 +147,7 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6 sm:space-y-8">
+    <div className="w-full max-w-4xl mx-auto space-y-6 sm:space-y-8 overflow-x-hidden">
       {/* Hero Section */}
       <div className="text-center space-y-4 sm:space-y-6 animate-slide-up">
         <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-primary rounded-full shadow-glow mb-4">
@@ -235,24 +235,24 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
                 />
                 <div className="absolute inset-0 bg-gradient-primary opacity-10 rounded-md pointer-events-none" />
               </div>
-              <div className="flex flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Button
                   onClick={copyToClipboard}
                   variant="outline"
                   disabled={!currentAccount || isGenerating || isInitializing}
-                  className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth flex-1 sm:flex-none h-12 sm:h-14"
+                  className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth flex-1 sm:flex-none h-12 sm:h-14 min-w-0"
                 >
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy
+                  <Copy className="w-4 h-4 mr-2 flex-shrink-0" />
+                  <span className="truncate">Copy</span>
                 </Button>
                 <Button
                   onClick={generateNewEmail}
                   disabled={isGenerating || isInitializing}
-                  className="bg-gradient-primary hover:shadow-glow transition-smooth flex-1 sm:flex-none h-12 sm:h-14"
+                  className="bg-gradient-primary hover:shadow-glow transition-smooth flex-1 sm:flex-none h-12 sm:h-14 min-w-0"
                 >
-                  <RefreshCw className={`w-4 h-4 mr-2 ${(isGenerating || isInitializing) ? 'animate-spin' : ''}`} />
-                  <span className="hidden sm:inline">{isInitializing ? 'Starting...' : isGenerating ? 'Generating...' : 'New Email'}</span>
-                  <span className="sm:hidden">{isInitializing ? 'Starting...' : isGenerating ? 'Gen...' : 'New'}</span>
+                  <RefreshCw className={`w-4 h-4 mr-2 flex-shrink-0 ${(isGenerating || isInitializing) ? 'animate-spin' : ''}`} />
+                  <span className="hidden sm:inline truncate">{isInitializing ? 'Starting...' : isGenerating ? 'Generating...' : 'New Email'}</span>
+                  <span className="sm:hidden truncate">{isInitializing ? 'Starting...' : isGenerating ? 'Gen...' : 'New'}</span>
                 </Button>
               </div>
             </div>
