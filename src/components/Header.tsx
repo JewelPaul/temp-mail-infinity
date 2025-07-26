@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import tempMailLogo from "@/assets/tempmail-logo.png";
 
 const Header = () => {
@@ -6,12 +7,12 @@ const Header = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-smooth">
             <img src={tempMailLogo} alt="BravoMail" className="w-8 h-8" />
             <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               BravoMail
             </h1>
-          </div>
+          </Link>
 
           {/* Navigation */}
           <nav className="flex items-center space-x-6">
@@ -24,6 +25,9 @@ const Header = () => {
             <a href="#faq" className="text-muted-foreground hover:text-primary transition-smooth">
               FAQ
             </a>
+            <Link to="/contact" className="text-muted-foreground hover:text-primary transition-smooth">
+              Contact
+            </Link>
           </nav>
         </div>
       </div>

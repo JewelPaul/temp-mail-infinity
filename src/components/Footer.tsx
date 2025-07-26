@@ -1,4 +1,5 @@
-import { Github, Twitter, Mail, Heart } from "lucide-react";
+import { Github, Instagram, Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 import tempMailLogo from "@/assets/tempmail-logo.png";
 
 const Footer = () => {
@@ -18,14 +19,23 @@ const Footer = () => {
               The most secure and reliable temporary email service. Protect your privacy with BravoMail instant disposable emails.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-smooth p-2">
-                <Twitter className="w-5 h-5" />
+              <a 
+                href="https://instagram.com/pauljewel25" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-smooth p-2"
+                aria-label="Follow us on Instagram"
+              >
+                <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-smooth p-2">
+              <a 
+                href="https://github.com/JewelPaul" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-smooth p-2"
+                aria-label="Visit our GitHub profile"
+              >
                 <Github className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-smooth p-2">
-                <Mail className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -34,7 +44,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground text-lg">Quick Links</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Home</a></li>
+              <li><Link to="/" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Home</Link></li>
               <li><a href="#features" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Features</a></li>
               <li><a href="#about" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">About</a></li>
               <li><a href="#faq" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">FAQ</a></li>
@@ -45,10 +55,10 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground text-lg">Legal</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Privacy Policy</a></li>
-              <li><a href="#" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Terms of Service</a></li>
-              <li><a href="#" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Cookie Policy</a></li>
-              <li><a href="#" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">GDPR</a></li>
+              <li><Link to="/privacy" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Terms of Service</Link></li>
+              <li><Link to="/cookies" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Cookie Policy</Link></li>
+              <li><Link to="/gdpr" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">GDPR</Link></li>
             </ul>
           </div>
 
@@ -57,7 +67,7 @@ const Footer = () => {
             <h3 className="font-semibold text-foreground text-lg">Support</h3>
             <ul className="space-y-3">
               <li><a href="#" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Help Center</a></li>
-              <li><a href="#" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Contact Us</a></li>
+              <li><Link to="/contact" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Contact Us</Link></li>
               <li><a href="#" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">API Docs</a></li>
               <li><a href="#" className="text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Status</a></li>
             </ul>
