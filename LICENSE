@@ -1,0 +1,182 @@
+BRAVOMAIL PROPRIETARY SOFTWARE LICENSE
+
+Copyright (c) 2024 BravoMail. All Rights Reserved.
+
+IMPORTANT: READ CAREFULLY BEFORE ACCESSING, DOWNLOADING, OR USING THIS SOFTWARE.
+
+================================================================================
+                            PROPRIETARY LICENSE AGREEMENT
+================================================================================
+
+This software and associated documentation files (the "Software"), including 
+but not limited to source code, object code, APIs, databases, algorithms, 
+user interfaces, designs, concepts, and any related materials are the 
+exclusive property of BravoMail ("Company") and are protected by copyright, 
+trade secret, and other intellectual property laws.
+
+================================================================================
+                                GRANT OF RIGHTS
+================================================================================
+
+Company grants you a LIMITED, NON-EXCLUSIVE, NON-TRANSFERABLE, REVOCABLE 
+license to:
+
+1. VIEW the source code for reference purposes only through this repository
+2. USE the BravoMail service exclusively through the official website: 
+   https://bravomail.com
+
+================================================================================
+                              RESTRICTIONS AND PROHIBITIONS
+================================================================================
+
+You are STRICTLY PROHIBITED from:
+
+1. CODE ACCESS & DISTRIBUTION:
+   - Downloading, copying, cloning, or extracting any portion of the Software
+   - Distributing, sharing, or redistributing the Software in any form
+   - Creating derivative works based on the Software
+   - Forking or creating copies of this repository
+   - Publishing or making available the Software through any medium
+
+2. REVERSE ENGINEERING & MODIFICATION:
+   - Reverse engineering, decompiling, or disassembling the Software
+   - Attempting to derive source code, algorithms, or logic from the Software
+   - Modifying, adapting, or creating works based on the Software
+   - Analyzing the Software for competitive purposes
+
+3. COMMERCIAL & UNAUTHORIZED USE:
+   - Using the Software for any commercial purposes without explicit written consent
+   - Selling, licensing, or sublicensing the Software or any part thereof
+   - Incorporating the Software into commercial products or services
+   - Using the Software to create competing services or applications
+
+4. API & SYSTEM ACCESS:
+   - Accessing APIs, databases, or backend systems outside the official website
+   - Attempting to bypass authentication or security measures
+   - Scraping, crawling, or automated access to any part of the system
+   - Using the Software or systems for unauthorized data collection
+
+5. INTELLECTUAL PROPERTY VIOLATIONS:
+   - Removing, altering, or obscuring copyright notices or proprietary markings
+   - Claiming ownership or authorship of any part of the Software
+   - Using Company trademarks, logos, or branding without authorization
+   - Filing patents or intellectual property claims related to the Software
+
+================================================================================
+                            INTELLECTUAL PROPERTY RIGHTS
+================================================================================
+
+ALL RIGHTS RESERVED. The Software contains proprietary and confidential 
+information belonging to Company. All intellectual property rights, including 
+but not limited to:
+
+- Copyrights in source code, object code, and documentation
+- Trade secrets and confidential information
+- Patents and patent applications
+- Trademarks and service marks
+- Database rights and sui generis rights
+- Know-how and proprietary methodologies
+
+remain the exclusive property of Company.
+
+================================================================================
+                                CONFIDENTIALITY
+================================================================================
+
+The Software contains trade secrets and confidential information of Company. 
+You agree to:
+
+1. Maintain the confidentiality of all proprietary information
+2. Not disclose any aspect of the Software to third parties
+3. Use reasonable measures to protect the confidentiality of the Software
+4. Immediately notify Company of any unauthorized disclosure or use
+
+================================================================================
+                              AUTHORIZED USE ONLY
+================================================================================
+
+The ONLY authorized method of using BravoMail services is through the official 
+website: https://bravomail.com
+
+Any other access method is strictly prohibited and constitutes a violation of 
+this license and applicable laws.
+
+================================================================================
+                            MONITORING & ENFORCEMENT
+================================================================================
+
+Company reserves the right to:
+
+1. Monitor access to and use of this repository
+2. Track and log all interactions with the Software
+3. Implement technical measures to prevent unauthorized use
+4. Terminate access without notice for license violations
+5. Pursue all legal remedies for violations of this license
+
+================================================================================
+                                NO WARRANTIES
+================================================================================
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+================================================================================
+                              LIMITATION OF LIABILITY
+================================================================================
+
+IN NO EVENT SHALL COMPANY BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, 
+WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR 
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+================================================================================
+                              LEGAL ENFORCEMENT
+================================================================================
+
+VIOLATIONS OF THIS LICENSE WILL RESULT IN:
+
+1. IMMEDIATE TERMINATION of all rights under this license
+2. LEGAL ACTION including but not limited to:
+   - Injunctive relief to prevent further violations
+   - Monetary damages and profits derived from violations
+   - Attorney fees and court costs
+   - Criminal prosecution where applicable
+
+3. PERMANENT BAN from all Company services and platforms
+
+================================================================================
+                                JURISDICTION
+================================================================================
+
+This license shall be governed by and construed in accordance with the laws of 
+[Jurisdiction], without regard to its conflict of law provisions. Any legal 
+action or proceeding arising under this license shall be brought exclusively 
+in the courts of [Jurisdiction].
+
+================================================================================
+                            ENTIRE AGREEMENT
+================================================================================
+
+This license constitutes the entire agreement between you and Company regarding 
+the Software and supersedes all prior or contemporaneous understandings 
+regarding such subject matter.
+
+================================================================================
+                              CONTACT INFORMATION
+================================================================================
+
+For licensing inquiries, permissions, or legal matters:
+
+Email: legal@bravomail.com
+Website: https://bravomail.com
+Business Inquiries: business@bravomail.com
+
+================================================================================
+
+BY ACCESSING THIS REPOSITORY OR SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ, 
+UNDERSTOOD, AND AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE.
+
+IF YOU DO NOT AGREE TO THESE TERMS, YOU MUST IMMEDIATELY CEASE ALL ACCESS TO 
+AND USE OF THE SOFTWARE.
+
+© 2024 BravoMail. All Rights Reserved.
