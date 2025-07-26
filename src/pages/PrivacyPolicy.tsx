@@ -15,7 +15,7 @@ const PrivacyPolicy = () => {
               Privacy Policy
             </CardTitle>
             <p className="text-muted-foreground text-lg mt-4">
-              Last updated: January 2025
+              Last updated: July 2025
             </p>
           </CardHeader>
           
@@ -30,33 +30,18 @@ const PrivacyPolicy = () => {
             <Separator className="bg-border/20" />
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold text-foreground">2. Information We Collect</h2>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">2.1 Automatically Collected Information</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    We may automatically collect certain information about your device and usage patterns, including:
-                  </p>
-                  <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                    <li>IP address and general location information</li>
-                    <li>Browser type and version</li>
-                    <li>Operating system</li>
-                    <li>Pages visited and time spent on our service</li>
-                    <li>Referring website addresses</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">2.2 Temporary Email Data</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    When you generate temporary email addresses through our service:
-                  </p>
-                  <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                    <li>Temporary email addresses are generated randomly</li>
-                    <li>Emails received are stored temporarily (maximum 10 minutes)</li>
-                    <li>No permanent record of email content is maintained</li>
-                    <li>All data is automatically purged after expiration</li>
-                  </ul>
+              <h2 className="text-2xl font-semibold text-foreground">2. Our Privacy-First Approach</h2>
+              <div className="bg-primary/10 border border-primary/20 rounded-lg p-6">
+                <h3 className="font-semibold text-primary mb-4 text-lg">Complete Privacy Protection:</h3>
+                <p className="text-foreground font-semibold leading-relaxed mb-4">
+                  <strong>BravoMail does NOT collect, store, track, or analyze any user personal data, browser information, device identifiers, or cookies. We do not log, cache, or retain any information about user activity. All temporary email data is deleted immediately after expiry and is never associated with any user or device.</strong>
+                </p>
+                <div className="space-y-3 text-muted-foreground">
+                  <p>• We do not use cookies, trackers, or analytics of any kind.</p>
+                  <p>• We cannot and do not identify, track, or profile visitors or users in any manner.</p>
+                  <p>• No information is ever shared with any third party.</p>
+                  <p>• Temporary email addresses are generated randomly without any user association.</p>
+                  <p>• All email data is permanently destroyed after 10 minutes with no recovery possible.</p>
                 </div>
               </div>
             </section>
@@ -64,16 +49,16 @@ const PrivacyPolicy = () => {
             <Separator className="bg-border/20" />
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold text-foreground">3. How We Use Your Information</h2>
+              <h2 className="text-2xl font-semibold text-foreground">3. How We Provide Our Service</h2>
               <p className="text-muted-foreground leading-relaxed">
-                We use the collected information for the following purposes:
+                Since we do not collect any personal information, we provide our temporary email service through:
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>To provide and maintain our temporary email service</li>
-                <li>To improve and optimize our service performance</li>
-                <li>To monitor service usage and prevent abuse</li>
-                <li>To ensure security and prevent fraudulent activities</li>
-                <li>To comply with legal obligations</li>
+                <li>Anonymous temporary email generation without user tracking</li>
+                <li>Automatic email deletion after 10 minutes with no data retention</li>
+                <li>Complete privacy protection with no logging or monitoring</li>
+                <li>Service delivery without any user identification or profiling</li>
+                <li>No analytics, cookies, or tracking technologies of any kind</li>
               </ul>
             </section>
 
@@ -96,14 +81,19 @@ const PrivacyPolicy = () => {
 
             <section className="space-y-4">
               <h2 className="text-2xl font-semibold text-foreground">5. Information Sharing and Disclosure</h2>
+              <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+                <p className="text-foreground font-semibold leading-relaxed">
+                  <strong>No information is ever shared with any third party.</strong>
+                </p>
+              </div>
               <p className="text-muted-foreground leading-relaxed">
-                We do not sell, trade, or otherwise transfer your personal information to third parties. We may disclose your information only in the following circumstances:
+                Since we do not collect, store, or retain any personal information, we have no data to share, sell, trade, or transfer to any third parties under any circumstances. This includes:
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>When required by law or legal process</li>
-                <li>To protect our rights, property, or safety</li>
-                <li>To prevent or investigate suspected fraud or security issues</li>
-                <li>With your explicit consent</li>
+                <li>No data sharing for legal processes (as no data exists to share)</li>
+                <li>No data sharing for security purposes (as no data is collected)</li>
+                <li>No data sharing with your consent (as no data exists)</li>
+                <li>Complete isolation from any third-party services or analytics</li>
               </ul>
             </section>
 
@@ -143,8 +133,13 @@ const PrivacyPolicy = () => {
 
             <section className="space-y-4">
               <h2 className="text-2xl font-semibold text-foreground">8. Cookies and Tracking</h2>
+              <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+                <p className="text-foreground font-semibold leading-relaxed">
+                  <strong>We do not use cookies, trackers, or analytics of any kind.</strong>
+                </p>
+              </div>
               <p className="text-muted-foreground leading-relaxed">
-                Our website uses minimal cookies and tracking technologies. For detailed information about our cookie usage, please refer to our Cookie Policy.
+                BravoMail operates completely without cookies, tracking pixels, analytics scripts, or any form of user monitoring technology. We do not track, log, or monitor user behavior in any manner.
               </p>
             </section>
 
