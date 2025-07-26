@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import tempMailLogo from "@/assets/tempmail-logo.png";
+import tempMailLogo from "@/assets/bravomail-logo.svg";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,7 +20,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-smooth">
-            <img src={tempMailLogo} alt="BravoMail" className="w-8 h-8" />
+            <img src={tempMailLogo} alt="BravoMail" className="w-10 h-6" />
             <h1 className="text-xl sm:text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               BravoMail
             </h1>

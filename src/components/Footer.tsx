@@ -1,6 +1,6 @@
 import { Github, Instagram, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
-import tempMailLogo from "@/assets/tempmail-logo.png";
+import tempMailLogo from "@/assets/bravomail-logo.svg";
 
 const Footer = () => {
   return (
@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">
             <div className="flex items-center space-x-3">
-              <img src={tempMailLogo} alt="BravoMail" className="w-8 h-8" />
+              <img src={tempMailLogo} alt="BravoMail" className="w-10 h-6" />
               <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
                 BravoMail
               </span>
