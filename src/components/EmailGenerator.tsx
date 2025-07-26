@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Copy, RefreshCw, Mail, Clock, Shield, AlertCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Copy, RefreshCw, Mail, Clock, Shield, AlertCircle, CheckCircle2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { mailApi, EmailAccount } from "@/services/mailApi";
 
@@ -14,10 +15,12 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
   const [currentAccount, setCurrentAccount] = useState<EmailAccount | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string>("");
+  const [apiMode, setApiMode] = useState<'mock' | 'real'>('mock');
   const { toast } = useToast();
 
   // Generate initial email on component mount
   useEffect(() => {
+    setApiMode(mailApi.getApiMode());
     generateNewEmail();
   }, []);
 
@@ -92,7 +95,27 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
           <div className="space-y-6">
             <div className="text-center">
               <h2 className="text-2xl font-semibold mb-2">Your Temporary Email</h2>
-              <p className="text-base text-muted-foreground">Valid for 10 minutes • Real email service</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <p className="text-base text-muted-foreground">Valid for 10 minutes</p>
+                <span className="text-muted-foreground">•</span>
+                <div className="flex items-center gap-1">
+                  {apiMode === 'real' ? (
+                    <>
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      <Badge variant="outline" className="text-green-600 border-green-600">
+                        Real Email Service
+                      </Badge>
+                    </>
+                  ) : (
+                    <>
+                      <AlertCircle className="w-4 h-4 text-amber-500" />
+                      <Badge variant="outline" className="text-amber-600 border-amber-600">
+                        Demo Mode
+                      </Badge>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
 
             {/* Error Display */}

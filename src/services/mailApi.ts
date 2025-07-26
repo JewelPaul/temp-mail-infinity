@@ -1,5 +1,11 @@
 const API_BASE = 'https://api.mail.gw';
-const USE_MOCK = false; // Set to false to use real API when available
+// Set to true for development/demo when real API is not accessible
+// Set to false for production with real email service
+const USE_MOCK = true; 
+
+// CORS proxy for development/testing when direct API access is blocked
+const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+const USE_CORS_PROXY = false; // Enable if needed for CORS issues
 
 export interface Domain {
   id: string;
@@ -43,6 +49,31 @@ const MOCK_MESSAGES: EmailMessage[] = [];
 class MailApi {
   private currentAccount: EmailAccount | null = null;
   private authToken: string | null = null;
+
+  private getApiUrl(endpoint: string): string {
+    const baseUrl = USE_CORS_PROXY ? `${CORS_PROXY}${API_BASE}` : API_BASE;
+    return `${baseUrl}${endpoint}`;
+  }
+
+  // Get current API mode for UI display
+  getApiMode(): 'mock' | 'real' {
+    return USE_MOCK ? 'mock' : 'real';
+  }
+
+  // Check if real API is available
+  async checkApiHealth(): Promise<boolean> {
+    if (USE_MOCK) return true;
+    
+    try {
+      const response = await fetch(this.getApiUrl('/domains'), { 
+        method: 'HEAD',
+        signal: AbortSignal.timeout(5000) // 5 second timeout
+      });
+      return response.ok;
+    } catch {
+      return false;
+    }
+  }
 
   // Mock API methods for demo purposes
   private async mockDelay(ms: number = 800): Promise<void> {
@@ -107,15 +138,16 @@ class MailApi {
     }
 
     try {
-      const response = await fetch(`${API_BASE}/domains`);
-      if (!response.ok) throw new Error('Failed to fetch domains');
+      const response = await fetch(this.getApiUrl('/domains'));
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+      }
       
       const data = await response.json();
       return data['hydra:member'] || [];
     } catch (error) {
       console.error('Error fetching domains:', error);
-      // Fallback to mock if real API fails
-      return this.mockGetDomains();
+      throw new Error(`Unable to connect to email service. Please check your internet connection and try again. ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -128,7 +160,9 @@ class MailApi {
     try {
       // Get available domains first
       const domains = await this.getDomains();
-      if (domains.length === 0) throw new Error('No domains available');
+      if (domains.length === 0) {
+        throw new Error('No email domains available from the service');
+      }
 
       // Generate random username
       const username = Math.random().toString(36).substring(2, 10);
@@ -137,7 +171,7 @@ class MailApi {
       const password = Math.random().toString(36).substring(2, 15);
 
       // Create account
-      const response = await fetch(`${API_BASE}/accounts`, {
+      const response = await fetch(this.getApiUrl('/accounts'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -148,12 +182,14 @@ class MailApi {
         }),
       });
 
-      if (!response.ok) throw new Error('Failed to create account');
+      if (!response.ok) {
+        throw new Error(`Failed to create email account: ${response.status} ${response.statusText}`);
+      }
       
       const account = await response.json();
       
       // Get authentication token
-      const tokenResponse = await fetch(`${API_BASE}/token`, {
+      const tokenResponse = await fetch(this.getApiUrl('/token'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -164,7 +200,9 @@ class MailApi {
         }),
       });
 
-      if (!tokenResponse.ok) throw new Error('Failed to get token');
+      if (!tokenResponse.ok) {
+        throw new Error(`Failed to authenticate: ${tokenResponse.status} ${tokenResponse.statusText}`);
+      }
       
       const tokenData = await tokenResponse.json();
       
@@ -180,8 +218,10 @@ class MailApi {
       return this.currentAccount;
     } catch (error) {
       console.error('Error creating account:', error);
-      // Fallback to mock if real API fails
-      return this.mockCreateAccount();
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error('Unable to create temporary email. The email service may be temporarily unavailable.');
     }
   }
 
@@ -194,20 +234,24 @@ class MailApi {
     }
 
     try {
-      const response = await fetch(`${API_BASE}/messages`, {
+      const response = await fetch(this.getApiUrl('/messages'), {
         headers: {
           'Authorization': `Bearer ${this.authToken}`,
         },
       });
 
-      if (!response.ok) throw new Error('Failed to fetch messages');
+      if (!response.ok) {
+        throw new Error(`Failed to fetch messages: ${response.status} ${response.statusText}`);
+      }
       
       const data = await response.json();
       return data['hydra:member'] || [];
     } catch (error) {
       console.error('Error fetching messages:', error);
-      // Fallback to mock if real API fails
-      return this.mockGetMessages();
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error('Unable to fetch emails. The email service may be temporarily unavailable.');
     }
   }
 
@@ -220,19 +264,23 @@ class MailApi {
     }
 
     try {
-      const response = await fetch(`${API_BASE}/messages/${id}`, {
+      const response = await fetch(this.getApiUrl(`/messages/${id}`), {
         headers: {
           'Authorization': `Bearer ${this.authToken}`,
         },
       });
 
-      if (!response.ok) throw new Error('Failed to fetch message');
+      if (!response.ok) {
+        throw new Error(`Failed to fetch message: ${response.status} ${response.statusText}`);
+      }
       
       return await response.json();
     } catch (error) {
       console.error('Error fetching message:', error);
-      // Fallback to mock if real API fails
-      return this.mockGetMessage(id);
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error('Unable to load email content. The email service may be temporarily unavailable.');
     }
   }
 
@@ -245,7 +293,7 @@ class MailApi {
     }
 
     try {
-      await fetch(`${API_BASE}/accounts/${this.currentAccount.id}`, {
+      await fetch(this.getApiUrl(`/accounts/${this.currentAccount.id}`), {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${this.authToken}`,
@@ -256,8 +304,9 @@ class MailApi {
       this.authToken = null;
     } catch (error) {
       console.error('Error deleting account:', error);
-      // Fallback to mock behavior
-      await this.mockDeleteAccount();
+      // Still clear local state even if API call fails
+      this.currentAccount = null;
+      this.authToken = null;
     }
   }
 
