@@ -58,7 +58,7 @@ const Footer = () => {
               <li><Link to="/privacy" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Privacy Policy</Link></li>
               <li><Link to="/terms" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Terms of Service</Link></li>
               <li><Link to="/cookies" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Cookie Policy</Link></li>
-              <li><Link to="/gdpr" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">GDPR</Link></li>
+
             </ul>
           </div>
 

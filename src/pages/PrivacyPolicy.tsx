@@ -115,24 +115,9 @@ const PrivacyPolicy = () => {
 
             <Separator className="bg-border/20" />
 
-            <section className="space-y-4">
-              <h2 className="text-2xl font-semibold text-foreground">7. GDPR Compliance</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                If you are a resident of the European Economic Area (EEA), you have certain data protection rights under the General Data Protection Regulation (GDPR):
-              </p>
-              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li><strong>Right to Access:</strong> You can request information about your personal data</li>
-                <li><strong>Right to Rectification:</strong> You can request correction of inaccurate data</li>
-                <li><strong>Right to Erasure:</strong> You can request deletion of your personal data</li>
-                <li><strong>Right to Data Portability:</strong> You can request transfer of your data</li>
-                <li><strong>Right to Object:</strong> You can object to processing of your personal data</li>
-              </ul>
-            </section>
-
-            <Separator className="bg-border/20" />
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold text-foreground">8. Cookies and Tracking</h2>
+              <h2 className="text-2xl font-semibold text-foreground">7. Cookies and Tracking</h2>
               <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
                 <p className="text-foreground font-semibold leading-relaxed">
                   <strong>We do not use cookies, trackers, or analytics of any kind.</strong>
@@ -146,7 +131,7 @@ const PrivacyPolicy = () => {
             <Separator className="bg-border/20" />
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold text-foreground">9. Third-Party Services</h2>
+              <h2 className="text-2xl font-semibold text-foreground">8. Third-Party Services</h2>
               <p className="text-muted-foreground leading-relaxed">
                 Our service may contain links to third-party websites or services. We are not responsible for the privacy practices of these third parties. We encourage you to review their privacy policies before providing any personal information.
               </p>
@@ -155,7 +140,7 @@ const PrivacyPolicy = () => {
             <Separator className="bg-border/20" />
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold text-foreground">10. Changes to This Privacy Policy</h2>
+              <h2 className="text-2xl font-semibold text-foreground">9. Changes to This Privacy Policy</h2>
               <p className="text-muted-foreground leading-relaxed">
                 We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. Your continued use of our service after any changes constitutes acceptance of the new Privacy Policy.
               </p>
@@ -164,7 +149,7 @@ const PrivacyPolicy = () => {
             <Separator className="bg-border/20" />
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-semibold text-foreground">11. Contact Us</h2>
+              <h2 className="text-2xl font-semibold text-foreground">10. Contact Us</h2>
               <p className="text-muted-foreground leading-relaxed">
                 If you have any questions about this Privacy Policy or our privacy practices, please contact us through our contact form on the website.
               </p>
