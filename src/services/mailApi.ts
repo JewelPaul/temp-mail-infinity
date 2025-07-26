@@ -1,7 +1,7 @@
 const API_BASE = 'https://api.mail.gw';
 // Set to true for development/demo when real API is not accessible
 // Set to false for production with real email service
-const USE_MOCK = true; 
+const USE_MOCK = false; 
 
 // CORS proxy for development/testing when direct API access is blocked
 const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
@@ -49,10 +49,80 @@ const MOCK_MESSAGES: EmailMessage[] = [];
 class MailApi {
   private currentAccount: EmailAccount | null = null;
   private authToken: string | null = null;
+  private corsProxyNeeded: boolean = false;
 
   private getApiUrl(endpoint: string): string {
-    const baseUrl = USE_CORS_PROXY ? `${CORS_PROXY}${API_BASE}` : API_BASE;
+    const needsProxy = USE_CORS_PROXY || this.corsProxyNeeded;
+    const baseUrl = needsProxy ? `${CORS_PROXY}${API_BASE}` : API_BASE;
     return `${baseUrl}${endpoint}`;
+  }
+
+  // Retry mechanism for API calls
+  private async retryApiCall<T>(operation: () => Promise<T>, maxRetries: number = 2): Promise<T> {
+    let lastError: Error | null = null;
+    
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        return await operation();
+      } catch (error) {
+        lastError = error instanceof Error ? error : new Error('Unknown error');
+        
+        if (attempt < maxRetries) {
+          console.log(`API call failed (attempt ${attempt + 1}/${maxRetries + 1}), retrying...`);
+          await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1))); // Progressive delay
+        }
+      }
+    }
+    
+    throw lastError;
+  }
+
+  // Auto-detect if CORS proxy is needed
+  private async testDirectConnection(): Promise<boolean> {
+    try {
+      const response = await fetch(`${API_BASE}/domains`, { 
+        method: 'HEAD',
+        signal: AbortSignal.timeout(3000)
+      });
+      return response.ok;
+    } catch {
+      return false;
+    }
+  }
+
+  // Initialize connection and detect best API access method
+  async initializeConnection(): Promise<void> {
+    if (USE_MOCK) return;
+    
+    console.log('Testing API connection...');
+    
+    // First try direct connection
+    const directWorks = await this.testDirectConnection();
+    
+    if (directWorks) {
+      this.corsProxyNeeded = false;
+      console.log('✓ Direct API access working');
+      return;
+    }
+    
+    console.log('⚠ Direct API access failed, trying CORS proxy...');
+    
+    // Try with CORS proxy
+    this.corsProxyNeeded = true;
+    try {
+      const response = await fetch(this.getApiUrl('/domains'), { 
+        method: 'HEAD',
+        signal: AbortSignal.timeout(5000)
+      });
+      if (response.ok) {
+        console.log('✓ CORS proxy working');
+      } else {
+        console.log('⚠ CORS proxy available but API returned error');
+      }
+    } catch {
+      console.log('⚠ CORS proxy also failed, API may be completely unavailable');
+      // Keep corsProxyNeeded = true as fallback, but expect failures
+    }
   }
 
   // Get current API mode for UI display
@@ -64,10 +134,15 @@ class MailApi {
   async checkApiHealth(): Promise<boolean> {
     if (USE_MOCK) return true;
     
+    // Initialize connection method if not done yet
+    if (!USE_CORS_PROXY && !this.corsProxyNeeded) {
+      await this.initializeConnection();
+    }
+    
     try {
       const response = await fetch(this.getApiUrl('/domains'), { 
         method: 'HEAD',
-        signal: AbortSignal.timeout(5000) // 5 second timeout
+        signal: AbortSignal.timeout(8000) // 8 second timeout
       });
       return response.ok;
     } catch {
@@ -137,17 +212,34 @@ class MailApi {
       return this.mockGetDomains();
     }
 
+    // Initialize connection method if not done yet
+    if (!USE_CORS_PROXY && !this.corsProxyNeeded) {
+      await this.initializeConnection();
+    }
+
     try {
-      const response = await fetch(this.getApiUrl('/domains'));
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      return data['hydra:member'] || [];
+      return await this.retryApiCall(async () => {
+        const response = await fetch(this.getApiUrl('/domains'), {
+          signal: AbortSignal.timeout(10000) // 10 second timeout
+        });
+        if (!response.ok) {
+          throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        return data['hydra:member'] || [];
+      });
     } catch (error) {
       console.error('Error fetching domains:', error);
-      throw new Error(`Unable to connect to email service. Please check your internet connection and try again. ${error instanceof Error ? error.message : 'Unknown error'}`);
+      
+      // Provide more specific error messages
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        throw new Error('Unable to connect to the email service. This may be due to network connectivity issues or CORS restrictions in your browser.');
+      } else if (error instanceof Error && error.name === 'AbortError') {
+        throw new Error('Connection to email service timed out. Please check your internet connection and try again.');
+      } else {
+        throw new Error(`Email service error: ${error instanceof Error ? error.message : 'Unknown network error'}`);
+      }
     }
   }
 
@@ -170,41 +262,47 @@ class MailApi {
       const address = `${username}@${domain}`;
       const password = Math.random().toString(36).substring(2, 15);
 
-      // Create account
-      const response = await fetch(this.getApiUrl('/accounts'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          address,
-          password,
-        }),
-      });
+      // Create account with retry
+      const account = await this.retryApiCall(async () => {
+        const response = await fetch(this.getApiUrl('/accounts'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            address,
+            password,
+          }),
+          signal: AbortSignal.timeout(15000) // 15 second timeout
+        });
 
-      if (!response.ok) {
-        throw new Error(`Failed to create email account: ${response.status} ${response.statusText}`);
-      }
-      
-      const account = await response.json();
-      
-      // Get authentication token
-      const tokenResponse = await fetch(this.getApiUrl('/token'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          address,
-          password,
-        }),
+        if (!response.ok) {
+          throw new Error(`Failed to create email account: ${response.status} ${response.statusText}`);
+        }
+        
+        return await response.json();
       });
-
-      if (!tokenResponse.ok) {
-        throw new Error(`Failed to authenticate: ${tokenResponse.status} ${tokenResponse.statusText}`);
-      }
       
-      const tokenData = await tokenResponse.json();
+      // Get authentication token with retry
+      const tokenData = await this.retryApiCall(async () => {
+        const tokenResponse = await fetch(this.getApiUrl('/token'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            address,
+            password,
+          }),
+          signal: AbortSignal.timeout(10000) // 10 second timeout
+        });
+
+        if (!tokenResponse.ok) {
+          throw new Error(`Failed to authenticate: ${tokenResponse.status} ${tokenResponse.statusText}`);
+        }
+        
+        return await tokenResponse.json();
+      });
       
       this.currentAccount = {
         id: account.id,
@@ -238,6 +336,7 @@ class MailApi {
         headers: {
           'Authorization': `Bearer ${this.authToken}`,
         },
+        signal: AbortSignal.timeout(10000) // 10 second timeout
       });
 
       if (!response.ok) {
@@ -268,6 +367,7 @@ class MailApi {
         headers: {
           'Authorization': `Bearer ${this.authToken}`,
         },
+        signal: AbortSignal.timeout(10000) // 10 second timeout
       });
 
       if (!response.ok) {
@@ -298,6 +398,7 @@ class MailApi {
         headers: {
           'Authorization': `Bearer ${this.authToken}`,
         },
+        signal: AbortSignal.timeout(8000) // 8 second timeout
       });
       
       this.currentAccount = null;
@@ -312,6 +413,15 @@ class MailApi {
 
   getCurrentAccount(): EmailAccount | null {
     return this.currentAccount;
+  }
+
+  // Get connection status for debugging/UI purposes  
+  getConnectionInfo(): { mode: 'mock' | 'real', corsProxy: boolean, initialized: boolean } {
+    return {
+      mode: USE_MOCK ? 'mock' : 'real',
+      corsProxy: this.corsProxyNeeded || USE_CORS_PROXY,
+      initialized: USE_MOCK || this.corsProxyNeeded !== undefined
+    };
   }
 }
 
