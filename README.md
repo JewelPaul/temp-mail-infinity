@@ -194,6 +194,47 @@ A: Yes! Our website works perfectly on all devices and platforms.
 
 ---
 
+## 🚀 **Development & Deployment**
+
+### **Technology Stack**
+- **Frontend**: React 18 + TypeScript
+- **Build Tool**: Vite 5
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI
+- **Deployment**: GitHub Pages with GitHub Actions
+
+### **Local Development**
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### **Deployment Process**
+This repository is configured for automatic deployment to GitHub Pages:
+
+1. **Automatic Deployment**: Push to `main` branch triggers GitHub Actions workflow
+2. **Custom Domain**: Configured to serve from `bravomail.email`
+3. **SEO Optimized**: Enhanced meta tags, sitemap, and structured data
+4. **Performance**: Optimized build with code splitting and compression
+
+### **Build Features**
+- ✅ **SEO Optimized**: Complete meta tags, Open Graph, Twitter Cards
+- ✅ **Performance**: Code splitting, asset optimization, compression
+- ✅ **PWA Ready**: Web manifest and service worker ready
+- ✅ **Analytics Ready**: Google Analytics integration placeholder
+- ✅ **Sitemap & Robots**: Automatic SEO files generation
+
+---
+
 ## 📜 **License**
 
 This project is protected under a proprietary license. See the [LICENSE](./LICENSE) file for details.
