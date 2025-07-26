@@ -114,11 +114,11 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
       ) : (
       <Card className="bg-gradient-card border-border/20 shadow-intense">
         <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 sm:pb-6 space-y-3 sm:space-y-0">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 w-full sm:w-auto">
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
               <Inbox className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <CardTitle className="text-lg sm:text-xl">Email Inbox</CardTitle>
               <p className="text-xs sm:text-sm text-muted-foreground">
                 {currentAccount ? `${emails.filter(email => !email.seen).length} unread messages` : 'Generate an email to start receiving messages'}
@@ -126,16 +126,16 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
             </div>
           </div>
           
-          <div className="flex gap-2 w-full sm:w-auto">
+          <div className="flex gap-2 w-full sm:w-auto shrink-0">
             <Button
               onClick={refreshInbox}
               disabled={isRefreshing || !currentAccount}
               variant="outline"
               size="sm"
-              className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth flex-1 sm:flex-none"
+              className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth flex-1 sm:flex-none min-w-0"
             >
               <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-              Refresh
+              <span className="truncate">Refresh</span>
             </Button>
           </div>
         </CardHeader>

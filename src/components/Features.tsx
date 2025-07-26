@@ -35,8 +35,8 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="py-16 sm:py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="features" className="py-16 sm:py-20 overflow-x-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-full">
         <div className="text-center mb-12 sm:mb-16 animate-slide-up">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             Why Choose <span className="bg-gradient-hero bg-clip-text text-transparent">BravoMail</span>?
@@ -46,7 +46,7 @@ const Features = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
@@ -69,7 +69,7 @@ const Features = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-16 sm:mt-20 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div className="mt-16 sm:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {[
             { number: "10M+", label: "Emails Generated" },
             { number: "500K+", label: "Active Users" },
