@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Copy, RefreshCw, Mail, Clock, Shield, AlertCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Copy, RefreshCw, Mail, Clock, Shield, AlertCircle, CheckCircle2, RotateCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { mailApi, EmailAccount } from "@/services/mailApi";
 
@@ -14,14 +15,83 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
   const [currentAccount, setCurrentAccount] = useState<EmailAccount | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string>("");
+  const [apiMode, setApiMode] = useState<'mock' | 'real'>('mock');
+  const [isInitializing, setIsInitializing] = useState(true);
+  const [apiHealthy, setApiHealthy] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const { toast } = useToast();
 
-  // Generate initial email on component mount
+  // Initialize API and generate initial email on component mount
   useEffect(() => {
-    generateNewEmail();
-  }, []);
+    const initializeApp = async () => {
+      setIsInitializing(true);
+      setApiMode(mailApi.getApiMode());
+      
+      try {
+        // Initialize the mail API connection
+        await mailApi.initializeConnection();
+        
+        // Check API health
+        const healthy = await mailApi.checkApiHealth();
+        setApiHealthy(healthy);
+        
+        if (healthy || mailApi.getApiMode() === 'mock') {
+          // Generate initial email if API is healthy or in mock mode
+          await generateNewEmail();
+        } else {
+          setError("Email service is currently unavailable. Please try again later.");
+        }
+      } catch (err) {
+        console.error('Failed to initialize app:', err);
+        setError("Failed to connect to email service. Please check your connection and try again.");
+      } finally {
+        setIsInitializing(false);
+      }
+    };
+
+    initializeApp();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Intentionally empty dependency array for initial mount only
+
+  const retryConnection = async () => {
+    setError("");
+    setIsInitializing(true);
+    setRetryCount(prev => prev + 1);
+    
+    try {
+      // Re-initialize the connection
+      await mailApi.initializeConnection();
+      
+      // Check API health again
+      const healthy = await mailApi.checkApiHealth();
+      setApiHealthy(healthy);
+      
+      if (healthy || mailApi.getApiMode() === 'mock') {
+        // Try to generate email again
+        await generateNewEmail();
+        toast({
+          title: "Connection restored!",
+          description: "Email service is now available.",
+        });
+      } else {
+        setError("Email service is still unavailable. Please try again later.");
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Connection retry failed";
+      setError(errorMessage);
+      toast({
+        title: "Retry failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsInitializing(false);
+    }
+  };
 
   const generateNewEmail = async () => {
+    if (isInitializing) return; // Don't allow generation during initialization
+    
     setIsGenerating(true);
     setError("");
     
@@ -36,6 +106,9 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
       setCurrentAccount(newAccount);
       onEmailChange?.(newAccount);
       
+      // Update API health status
+      setApiHealthy(true);
+      
       toast({
         title: "New email generated!",
         description: "Your temporary email is ready to use.",
@@ -43,6 +116,8 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Failed to generate email";
       setError(errorMessage);
+      setApiHealthy(false);
+      
       toast({
         title: "Error",
         description: errorMessage,
@@ -92,14 +167,57 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
           <div className="space-y-6">
             <div className="text-center">
               <h2 className="text-2xl font-semibold mb-2">Your Temporary Email</h2>
-              <p className="text-base text-muted-foreground">Valid for 10 minutes • Real email service</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <p className="text-base text-muted-foreground">Valid for 10 minutes</p>
+                <span className="text-muted-foreground">•</span>
+                <div className="flex items-center gap-1">
+                  {apiMode === 'real' ? (
+                    apiHealthy ? (
+                      <>
+                        <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        <Badge variant="outline" className="text-green-600 border-green-600">
+                          Real Email Service
+                        </Badge>
+                      </>
+                    ) : (
+                      <>
+                        <AlertCircle className="w-4 h-4 text-red-500" />
+                        <Badge variant="outline" className="text-red-600 border-red-600">
+                          Service Unavailable
+                        </Badge>
+                      </>
+                    )
+                  ) : (
+                    <>
+                      <AlertCircle className="w-4 h-4 text-amber-500" />
+                      <Badge variant="outline" className="text-amber-600 border-amber-600">
+                        Demo Mode
+                      </Badge>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
 
             {/* Error Display */}
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
-                <AlertCircle className="w-4 h-4 text-destructive flex-shrink-0" />
-                <p className="text-sm text-destructive">{error}</p>
+              <div className="flex items-center justify-between gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-destructive flex-shrink-0" />
+                  <p className="text-sm text-destructive">{error}</p>
+                </div>
+                {!apiHealthy && apiMode === 'real' && (
+                  <Button
+                    onClick={retryConnection}
+                    variant="outline"
+                    size="sm"
+                    disabled={isInitializing}
+                    className="text-destructive border-destructive hover:bg-destructive hover:text-destructive-foreground"
+                  >
+                    <RotateCcw className={`w-3 h-3 mr-1 ${isInitializing ? 'animate-spin' : ''}`} />
+                    Retry
+                  </Button>
+                )}
               </div>
             )}
 
@@ -107,7 +225,11 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
             <div className="flex flex-row gap-3">
               <div className="relative flex-1">
                 <Input
-                  value={currentAccount?.address || "Generating..."}
+                  value={
+                    isInitializing 
+                      ? "Initializing..." 
+                      : currentAccount?.address || "Generating..."
+                  }
                   readOnly
                   className="text-lg font-mono text-center bg-background/50 border-border/20 focus:border-primary transition-smooth h-14"
                 />
@@ -117,7 +239,7 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
                 <Button
                   onClick={copyToClipboard}
                   variant="outline"
-                  disabled={!currentAccount || isGenerating}
+                  disabled={!currentAccount || isGenerating || isInitializing}
                   className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth"
                 >
                   <Copy className="w-4 h-4 mr-2" />
@@ -125,11 +247,11 @@ const EmailGenerator = ({ onEmailChange }: EmailGeneratorProps) => {
                 </Button>
                 <Button
                   onClick={generateNewEmail}
-                  disabled={isGenerating}
+                  disabled={isGenerating || isInitializing}
                   className="bg-gradient-primary hover:shadow-glow transition-smooth"
                 >
-                  <RefreshCw className={`w-4 h-4 mr-2 ${isGenerating ? 'animate-spin' : ''}`} />
-                  {isGenerating ? 'Generating...' : 'New Email'}
+                  <RefreshCw className={`w-4 h-4 mr-2 ${(isGenerating || isInitializing) ? 'animate-spin' : ''}`} />
+                  {isInitializing ? 'Starting...' : isGenerating ? 'Generating...' : 'New Email'}
                 </Button>
               </div>
             </div>
