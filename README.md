@@ -1,5 +1,7 @@
 # 🛡️ BravoMail - Premium Secure Temporary Email Service
 
+**🚨 CRITICAL LEGAL WARNING: NO COPYING, DOWNLOADING, CLONING, OR REDISTRIBUTING ANY PART OF THIS CODEBASE IS ALLOWED UNDER ANY CIRCUMSTANCES. VIOLATIONS WILL RESULT IN IMMEDIATE LEGAL ACTION AND PROSECUTION. 🚨**
+
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](./LICENSE)
 [![Security: Enterprise Grade](https://img.shields.io/badge/Security-Enterprise%20Grade-green.svg)](#security-features)
 [![Privacy: Protected](https://img.shields.io/badge/Privacy-Protected-blue.svg)](#privacy-protection)
@@ -15,6 +17,8 @@
 ## 💎 **About BravoMail**
 
 **BravoMail** is the world's most advanced, privacy-focused temporary email service that provides instant disposable email addresses to protect your real email from spam, unwanted communications, and privacy breaches. Built with enterprise-grade security and cutting-edge technology.
+
+**⚠️ CRITICAL LEGAL NOTICE: NO COPYING, DOWNLOADING, CLONING, OR REDISTRIBUTING ANY PART OF THIS CODEBASE IS ALLOWED UNDER ANY CIRCUMSTANCES. All code, documentation, and materials in this repository are strictly protected and proprietary. Unauthorized access or use will result in immediate legal action and prosecution.**
 
 ### 🎯 **Why Choose BravoMail?**
 
@@ -51,6 +55,7 @@
 - **Bulk Operations**: Manage multiple temporary emails
 
 ### 🛡️ **Privacy Protection**
+- **No Data Collection**: BravoMail does not collect or retain any data about users, visitors, or browser information. No cookies, logs, or analytics are used.
 - **No Logging**: We don't track or store user activities
 - **Anonymous Usage**: No personal information required
 - **GDPR Compliant**: Full compliance with privacy regulations
@@ -71,6 +76,8 @@
 - ✅ **Secure Environment**: Protected and monitored infrastructure
 - ✅ **Optimal Performance**: Optimized for speed and reliability
 
+**⚠️ USAGE RESTRICTIONS: BravoMail is for personal, non-commercial use only via the official website. No other use, including through scripts or automation, is permitted. Any unauthorized access method constitutes a violation of our terms and applicable laws.**
+
 ### **📞 Support & Contact**
 
 - **🌐 Official Website**: [https://bravomail.com](https://bravomail.com)
@@ -87,6 +94,8 @@
 
 **This repository and its contents are strictly protected under proprietary license. By accessing this repository, you agree to the following restrictions:**
 
+**🚨 ABSOLUTE PROHIBITION: NO COPYING, DOWNLOADING, CLONING, OR REDISTRIBUTING ANY PART OF THIS CODEBASE IS ALLOWED UNDER ANY CIRCUMSTANCES. ALL MATERIALS ARE STRICTLY PROTECTED AND PROPRIETARY.**
+
 #### **❌ Prohibited Activities:**
 - **No Code Downloading**: Downloading, cloning, or copying any code is strictly prohibited
 - **No Distribution**: Sharing, redistributing, or republishing any part of this codebase
@@ -94,18 +103,26 @@
 - **No API Access**: Accessing our APIs outside the official website is strictly forbidden
 - **No Reverse Engineering**: Attempting to reverse engineer, decompile, or extract code logic
 - **No Unauthorized Use**: Any use not explicitly permitted is strictly prohibited
+- **No Automation**: Scripts, bots, or automated access to any part of the system is forbidden
+- **No Data Collection**: Unauthorized collection or retention of any data from our systems
 
 #### **✅ Permitted Activities:**
 - **Viewing Only**: Repository may be viewed for reference purposes only
-- **Official Website Use**: Full functionality available through [bravomail.com](https://bravomail.com)
+- **Official Website Use**: Full functionality available through [bravomail.com](https://bravomail.com) for personal, non-commercial use only
 
 ### **⚖️ Legal Enforcement**
 
 **Violation of these terms may result in:**
-- Immediate legal action
-- Criminal prosecution under applicable laws
-- Damages and legal fees recovery
-- Permanent ban from all our services
+- **Immediate Legal Action**: Swift prosecution under applicable laws
+- **Criminal Prosecution**: Pursuit of criminal charges for unauthorized access and theft of proprietary information
+- **Civil Litigation**: Recovery of damages, profits, and legal fees
+- **Permanent Ban**: Immediate and permanent ban from all our services and platforms
+- **Account Termination**: Termination of any existing accounts or services
+- **Injunctive Relief**: Court orders to prevent further violations
+- **Law Enforcement Involvement**: Cooperation with authorities for criminal prosecution
+- **International Legal Action**: Pursuit of legal remedies across multiple jurisdictions
+
+**⚠️ WARNING: We actively monitor all repository access and maintain comprehensive logs. Violations are detected and prosecuted to the full extent of the law. Legal action has been taken against violators in the past and will continue.**
 
 ---
 
@@ -202,4 +219,4 @@ This project is protected under a proprietary license. See the [LICENSE](./LICEN
 
 ---
 
-**⚠️ Remember: Only use BravoMail through our official website [bravomail.com](https://bravomail.com) for security and full functionality.**
+**⚠️ FINAL WARNING: Only use BravoMail through our official website [bravomail.com](https://bravomail.com) for security and full functionality. Any other use is strictly prohibited and will result in legal action. NO COPYING, DOWNLOADING, CLONING, OR REDISTRIBUTING OF ANY PART OF THIS CODEBASE IS PERMITTED.**
