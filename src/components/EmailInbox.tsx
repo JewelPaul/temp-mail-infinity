@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { RefreshCw, Eye, Inbox, AlertCircle, PlayCircle } from "lucide-react";
+import { RefreshCw, Eye, Inbox, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { mailApi, EmailAccount, EmailMessage, EmailContent } from "@/services/mailApi";
 import EmailViewer from "./EmailViewer";
@@ -17,62 +17,11 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
   const [error, setError] = useState<string>("");
   const [selectedEmail, setSelectedEmail] = useState<EmailContent | null>(null);
   const [loadingEmailId, setLoadingEmailId] = useState<string>("");
-  const [demoMode, setDemoMode] = useState(false);
   const { toast } = useToast();
-
-  // Demo data for testing purposes
-  const demoEmails: EmailMessage[] = [
-    {
-      id: "demo1",
-      from: { name: "GitHub", address: "noreply@github.com" },
-      subject: "Your verification code is 123456",
-      intro: "Use this code to verify your account: 123456. This code will expire in 10 minutes.",
-      seen: false,
-      createdAt: new Date().toISOString(),
-      size: 1024
-    },
-    {
-      id: "demo2", 
-      from: { name: "PayPal", address: "service@paypal.com" },
-      subject: "Security Alert - New login detected",
-      intro: "We detected a new login to your account from a new device. If this wasn't you, please secure your account immediately.",
-      seen: true,
-      createdAt: new Date(Date.now() - 3600000).toISOString(),
-      size: 2048
-    },
-    {
-      id: "demo3",
-      from: { name: "Amazon", address: "account-update@amazon.com" },
-      subject: "Your order has been shipped",
-      intro: "Good news! Your recent order has been shipped and is on its way to you. Track your package using the link below.",
-      seen: false,
-      createdAt: new Date(Date.now() - 7200000).toISOString(), 
-      size: 1536
-    }
-  ];
-
-  const getDemoEmailContent = (id: string): EmailContent => {
-    const email = demoEmails.find(e => e.id === id);
-    if (!email) throw new Error("Email not found");
-    
-    return {
-      ...email,
-      html: [`<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <h2 style="color: #333;">${email.subject}</h2>
-        <p>${email.intro}</p>
-        <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 20px 0;">
-          <p><strong>This is a demo email to showcase the in-app email viewer functionality.</strong></p>
-          <p>In a real scenario, this would be the actual email content from the mail server.</p>
-        </div>
-        <p>Best regards,<br>${email.from.name}</p>
-      </div>`],
-      text: `${email.subject}\n\n${email.intro}\n\nThis is a demo email to showcase the in-app email viewer functionality.\n\nBest regards,\n${email.from.name}`
-    };
-  };
 
   // Auto-refresh emails every 10 seconds when account is available
   useEffect(() => {
-    if (!currentAccount && !demoMode) {
+    if (!currentAccount) {
       setEmails([]);
       return;
     }
@@ -80,12 +29,8 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
     const fetchEmails = async () => {
       try {
         setError("");
-        if (demoMode) {
-          setEmails(demoEmails);
-        } else {
-          const messages = await mailApi.getMessages();
-          setEmails(messages);
-        }
+        const messages = await mailApi.getMessages();
+        setEmails(messages);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : "Failed to fetch emails";
         setError(errorMessage);
@@ -95,26 +40,19 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
     // Initial fetch
     fetchEmails();
 
-    if (!demoMode) {
-      // Set up auto-refresh only for real API
-      const interval = setInterval(fetchEmails, 10000);
-      return () => clearInterval(interval);
-    }
-  }, [currentAccount, demoMode]);
+    // Set up auto-refresh
+    const interval = setInterval(fetchEmails, 10000);
+    return () => clearInterval(interval);
+  }, [currentAccount]);
 
   const refreshInbox = async () => {
-    if (!currentAccount && !demoMode) return;
+    if (!currentAccount) return;
     
     setIsRefreshing(true);
     setError("");
     
     try {
-      let messages;
-      if (demoMode) {
-        messages = demoEmails;
-      } else {
-        messages = await mailApi.getMessages();
-      }
+      const messages = await mailApi.getMessages();
       setEmails(messages);
       
       toast({
@@ -137,12 +75,7 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
   const handleEmailClick = async (email: EmailMessage) => {
     setLoadingEmailId(email.id);
     try {
-      let content;
-      if (demoMode) {
-        content = getDemoEmailContent(email.id);
-      } else {
-        content = await mailApi.getMessage(email.id);
-      }
+      const content = await mailApi.getMessage(email.id);
       setSelectedEmail(content);
     } catch (err) {
       toast({
@@ -157,15 +90,6 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
 
   const handleBackToInbox = () => {
     setSelectedEmail(null);
-  };
-
-  const startDemo = () => {
-    setDemoMode(true);
-    setEmails(demoEmails);
-    toast({
-      title: "Demo Mode Activated",
-      description: "Click on any email to see the in-app viewer!",
-    });
   };
 
   const formatTimestamp = (dateString: string) => {
@@ -197,26 +121,15 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
             <div className="min-w-0">
               <CardTitle className="text-xl">Email Inbox</CardTitle>
               <p className="text-sm text-muted-foreground">
-                {currentAccount || demoMode ? `${emails.filter(email => !email.seen).length} unread messages` : 'Generate an email to start receiving messages'}
+                {currentAccount ? `${emails.filter(email => !email.seen).length} unread messages` : 'Generate an email to start receiving messages'}
               </p>
             </div>
           </div>
           
           <div className="flex gap-2">
-            {!currentAccount && !demoMode && (
-              <Button
-                onClick={startDemo}
-                variant="default"
-                size="sm"
-                className="bg-gradient-primary hover:shadow-glow transition-smooth"
-              >
-                <PlayCircle className="w-4 h-4 mr-2" />
-                Try Demo
-              </Button>
-            )}
             <Button
               onClick={refreshInbox}
-              disabled={isRefreshing || (!currentAccount && !demoMode)}
+              disabled={isRefreshing || !currentAccount}
               variant="outline"
               size="sm"
               className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth"
@@ -236,29 +149,20 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
             </div>
           )}
 
-          {!currentAccount && !demoMode ? (
+          {!currentAccount ? (
             <div className="text-center py-12">
               <Inbox className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
               <h3 className="text-lg font-semibold mb-2">No active email</h3>
-
               <p className="text-base text-muted-foreground">
                 Generate a temporary email address to start receiving messages
               </p>
-              <Button
-                onClick={startDemo}
-                variant="outline"
-                className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth"
-              >
-                <PlayCircle className="w-4 h-4 mr-2" />
-                Try Demo Mode
-              </Button>
             </div>
           ) : emails.length === 0 ? (
             <div className="text-center py-12">
               <Inbox className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
               <h3 className="text-lg font-semibold mb-2">No emails yet</h3>
               <p className="text-base text-muted-foreground">
-                Your inbox is empty. New emails will appear here automatically.
+                Waiting for new messages... Your inbox will update automatically when emails arrive.
               </p>
             </div>
           ) : (
