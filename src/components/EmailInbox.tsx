@@ -113,26 +113,26 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
         <EmailViewer email={selectedEmail} onBack={handleBackToInbox} />
       ) : (
       <Card className="bg-gradient-card border-border/20 shadow-intense">
-        <CardHeader className="flex flex-row items-center justify-between pb-6">
+        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 sm:pb-6 space-y-3 sm:space-y-0">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-              <Inbox className="w-5 h-5 text-primary" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+              <Inbox className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
             </div>
             <div className="min-w-0">
-              <CardTitle className="text-xl">Email Inbox</CardTitle>
-              <p className="text-sm text-muted-foreground">
+              <CardTitle className="text-lg sm:text-xl">Email Inbox</CardTitle>
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 {currentAccount ? `${emails.filter(email => !email.seen).length} unread messages` : 'Generate an email to start receiving messages'}
               </p>
             </div>
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-full sm:w-auto">
             <Button
               onClick={refreshInbox}
               disabled={isRefreshing || !currentAccount}
               variant="outline"
               size="sm"
-              className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth"
+              className="bg-background/50 border-border/20 hover:bg-primary/10 transition-smooth flex-1 sm:flex-none"
             >
               <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
               Refresh
@@ -140,7 +140,7 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
           </div>
         </CardHeader>
 
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           {/* Error Display */}
           {error && (
             <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg mb-4">
@@ -150,18 +150,18 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
           )}
 
           {!currentAccount ? (
-            <div className="text-center py-12">
-              <Inbox className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-              <h3 className="text-lg font-semibold mb-2">No active email</h3>
-              <p className="text-base text-muted-foreground">
+            <div className="text-center py-8 sm:py-12">
+              <Inbox className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+              <h3 className="text-base sm:text-lg font-semibold mb-2">No active email</h3>
+              <p className="text-sm sm:text-base text-muted-foreground px-4">
                 Generate a temporary email address to start receiving messages
               </p>
             </div>
           ) : emails.length === 0 ? (
-            <div className="text-center py-12">
-              <Inbox className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-              <h3 className="text-lg font-semibold mb-2">No emails yet</h3>
-              <p className="text-base text-muted-foreground">
+            <div className="text-center py-8 sm:py-12">
+              <Inbox className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+              <h3 className="text-base sm:text-lg font-semibold mb-2">No emails yet</h3>
+              <p className="text-sm sm:text-base text-muted-foreground px-4">
                 Waiting for new messages... Your inbox will update automatically when emails arrive.
               </p>
             </div>
@@ -170,7 +170,7 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
               {emails.map((email) => (
                 <div
                   key={email.id}
-                  className={`group p-4 rounded-lg border border-border/20 transition-all hover:shadow-md hover:border-primary/20 cursor-pointer ${
+                  className={`group p-3 sm:p-4 rounded-lg border border-border/20 transition-all hover:shadow-md hover:border-primary/20 cursor-pointer ${
                     email.seen ? 'bg-background/30' : 'bg-background/60 border-primary/30'
                   }`}
                   onClick={() => handleEmailClick(email)}
@@ -178,27 +178,27 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <p className="font-medium text-sm truncate">{email.from.address}</p>
+                        <p className="font-medium text-xs sm:text-sm truncate">{email.from.address}</p>
                         {!email.seen && (
                           <Badge variant="secondary" className="text-xs">New</Badge>
                         )}
                       </div>
-                      <h4 className="font-semibold text-base mb-2 truncate">{email.subject}</h4>
-                      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">{email.intro}</p>
+                      <h4 className="font-semibold text-sm sm:text-base mb-2 truncate">{email.subject}</h4>
+                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">{email.intro}</p>
                       <p className="text-xs text-muted-foreground mt-2">{formatTimestamp(email.createdAt)}</p>
                     </div>
                     
                     <div className="flex items-center gap-2">
                       {loadingEmailId === email.id ? (
-                        <div className="w-8 h-8 flex items-center justify-center">
-                          <RefreshCw className="w-4 h-4 animate-spin text-primary" />
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center">
+                          <RefreshCw className="w-3 h-3 sm:w-4 sm:h-4 animate-spin text-primary" />
                         </div>
                       ) : (
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="opacity-50 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-8 w-8 p-0 hover:bg-primary/10"
+                            className="h-6 w-6 sm:h-8 sm:w-8 p-0 hover:bg-primary/10"
                           >
                             <Eye className="w-3 h-3" />
                           </Button>
