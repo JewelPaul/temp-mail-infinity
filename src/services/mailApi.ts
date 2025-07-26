@@ -1,5 +1,5 @@
 const API_BASE = 'https://api.mail.gw';
-const USE_MOCK = true; // Set to false to use real API when available
+const USE_MOCK = false; // Set to false to use real API when available
 
 export interface Domain {
   id: string;
@@ -38,26 +38,7 @@ const MOCK_DOMAINS: Domain[] = [
   { id: '2', domain: 'temp-email.net', isActive: true }
 ];
 
-const MOCK_MESSAGES: EmailMessage[] = [
-  {
-    id: '1',
-    from: { name: 'GitHub', address: 'noreply@github.com' },
-    subject: 'Welcome to GitHub!',
-    intro: 'Thanks for signing up! Your account is ready.',
-    seen: false,
-    createdAt: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-    size: 1024
-  },
-  {
-    id: '2', 
-    from: { name: 'Netflix', address: 'info@netflix.com' },
-    subject: 'Verify your email address',
-    intro: 'Please click the link below to verify your email.',
-    seen: false,
-    createdAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-    size: 2048
-  }
-];
+const MOCK_MESSAGES: EmailMessage[] = [];
 
 class MailApi {
   private currentAccount: EmailAccount | null = null;
@@ -97,9 +78,8 @@ class MailApi {
 
   private async mockGetMessages(): Promise<EmailMessage[]> {
     await this.mockDelay(600);
-    // Simulate some messages arriving over time
-    const numMessages = Math.floor(Math.random() * 3);
-    return MOCK_MESSAGES.slice(0, numMessages);
+    // Always return empty array - no demo/fake emails
+    return [];
   }
 
   private async mockGetMessage(id: string): Promise<EmailContent> {
