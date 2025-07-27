@@ -13,6 +13,10 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import HelpCenter from "./pages/HelpCenter";
+import Articles from "./pages/Articles";
+import TemporaryEmailPrivacySecurity from "./pages/articles/TemporaryEmailPrivacySecurity";
+import PreventSpamPhishing from "./pages/articles/PreventSpamPhishing";
+import DigitalSafetyBestPractices from "./pages/articles/DigitalSafetyBestPractices";
 
 import NotFound from "./pages/NotFound";
 
@@ -39,6 +43,10 @@ const App = () => {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/cookies" element={<CookiePolicy />} />
             <Route path="/help-center" element={<HelpCenter />} />
+            <Route path="/articles" element={<Articles />} />
+            <Route path="/articles/temporary-email-privacy-security" element={<TemporaryEmailPrivacySecurity />} />
+            <Route path="/articles/prevent-spam-phishing" element={<PreventSpamPhishing />} />
+            <Route path="/articles/digital-safety-best-practices" element={<DigitalSafetyBestPractices />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
