@@ -45,9 +45,9 @@ const Footer = () => {
             <h3 className="font-semibold text-foreground text-lg">Quick Links</h3>
             <ul className="space-y-3">
               <li><Link to="/" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Home</Link></li>
-              <li><a href="#features" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Features</a></li>
-              <li><a href="#about" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">About</a></li>
-              <li><a href="#faq" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">FAQ</a></li>
+              <li><Link to="/#features" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Features</Link></li>
+              <li><Link to="/about" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">About</Link></li>
+              <li><Link to="/faq" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">FAQ</Link></li>
             </ul>
           </div>
 
