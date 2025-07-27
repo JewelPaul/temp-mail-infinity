@@ -190,7 +190,6 @@
   /* OTP Code Styling - Enhanced for Professional, Dynamic Look */
   .otp-code {
     @apply inline-flex items-center justify-center;
-    @apply px-4 py-3 mx-2 my-2;
     @apply border-2 rounded-xl;
     @apply font-mono font-black text-center;
     @apply cursor-pointer select-all;
@@ -199,17 +198,22 @@
     @apply hover:scale-105 hover:shadow-2xl;
     @apply active:scale-95;
     
-    /* Enhanced typography with better responsive scaling */
-    font-size: clamp(0.875rem, 3.5vw, 2rem);
-    letter-spacing: 0.1em;
-    line-height: 1.2;
+    /* Enhanced typography with better responsive scaling - more conservative for mobile */
+    font-size: clamp(0.75rem, 2vw, 1.5rem);
+    letter-spacing: 0.05em;
+    line-height: 1.3;
     min-width: 0;
     max-width: 100%;
     position: relative;
     
+    /* Responsive padding and margins - start conservative */
+    padding: clamp(0.375rem, 1.5vw, 0.75rem) clamp(0.5rem, 2vw, 1rem);
+    margin: clamp(0.125rem, 0.5vw, 0.25rem) clamp(0.25rem, 0.75vw, 0.5rem);
+    
     /* Ensure the code fits within its container */
     word-break: break-all;
     overflow-wrap: break-word;
+    box-sizing: border-box;
     
     /* Enhanced background with gradient and modern styling */
     background: linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.25));
@@ -305,7 +309,7 @@
     transform: translateY(-2px) scale(1.05);
   }
 
-  /* Email content area styling */
+  /* Email content area styling - Enhanced for better OTP container control */
   .email-content-area {
     @apply select-text;
     -webkit-user-select: text;
@@ -316,6 +320,47 @@
     word-wrap: break-word;
     max-width: 100%;
     box-sizing: border-box;
+    
+    /* Ensure OTP codes scale relative to container */
+    container-type: inline-size;
+    position: relative;
+  }
+  
+  /* Container query support for even better responsive control */
+  @container (max-width: 400px) {
+    .email-content-area .otp-code {
+      font-size: clamp(0.5rem, 2vw, 0.75rem) !important;
+      padding: 0.15rem 0.25rem !important;
+      margin: 0.05rem 0.1rem !important;
+      letter-spacing: 0.01em !important;
+    }
+  }
+  
+  @container (min-width: 401px) and (max-width: 600px) {
+    .email-content-area .otp-code {
+      font-size: clamp(0.625rem, 2.25vw, 0.875rem) !important;
+      padding: 0.25rem 0.375rem !important;
+      margin: 0.075rem 0.15rem !important;
+    }
+  }
+  
+  /* Additional safety constraints for OTP codes */
+  .otp-code {
+    /* Prevent codes from becoming larger than 15% of container width */
+    max-width: min(15rem, 15vw, calc(100% - 2rem));
+    
+    /* Ensure minimum readability */
+    min-width: 2.5rem;
+    
+    /* Better text handling for very long codes */
+    hyphens: none;
+    word-break: keep-all;
+    
+    /* Improved baseline alignment */
+    vertical-align: baseline;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .inbox-selectable {
@@ -351,38 +396,56 @@
     100% { transform: scale(1.1); }
   }
 
-  /* Comprehensive responsive OTP styling */
+  /* Comprehensive responsive OTP styling - Mobile-first approach */
   
-  /* Extra small screens (phones in portrait) */
+  /* Extra small screens (phones in portrait) - More conservative sizing */
   @media (max-width: 480px) {
     .otp-code {
-      font-size: clamp(0.75rem, 4vw, 1.1rem);
-      padding: 0.5rem 0.625rem;
-      margin: 0.125rem 0.25rem;
-      letter-spacing: 0.05em;
+      font-size: clamp(0.6rem, 2.5vw, 0.9rem);
+      padding: clamp(0.25rem, 1vw, 0.375rem) clamp(0.375rem, 1.25vw, 0.5rem);
+      margin: 0.1rem 0.15rem;
+      letter-spacing: 0.03em;
       max-width: calc(100vw - 4rem);
+      min-width: auto;
       box-sizing: border-box;
+      
+      /* Prevent overflow and ensure readability */
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    
+    /* Reduce hover effects on mobile */
+    .otp-code:hover {
+      transform: scale(1.02);
     }
   }
 
-  /* Ultra small screens and containers */
+  /* Ultra small screens and containers - Very conservative */
   @media (max-width: 360px) {
     .otp-code {
-      font-size: clamp(0.65rem, 3.5vw, 0.95rem);
-      padding: 0.375rem 0.5rem;
-      margin: 0.1rem 0.2rem;
-      letter-spacing: 0.03em;
+      font-size: clamp(0.55rem, 2vw, 0.75rem);
+      padding: 0.2rem 0.3rem;
+      margin: 0.075rem 0.1rem;
+      letter-spacing: 0.02em;
       max-width: calc(100vw - 3rem);
+      min-width: auto;
       box-sizing: border-box;
+      border-width: 1px;
+      
+      /* Ensure visibility without overwhelming */
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 
   /* Small screens (phones in landscape, small tablets) */
   @media (min-width: 481px) and (max-width: 640px) {
     .otp-code {
-      font-size: clamp(0.875rem, 3.5vw, 1.3rem);
-      padding: 0.625rem 0.75rem;
-      margin: 0.25rem 0.375rem;
+      font-size: clamp(0.75rem, 2.25vw, 1rem);
+      padding: clamp(0.375rem, 1.25vw, 0.5rem) clamp(0.5rem, 1.5vw, 0.75rem);
+      margin: 0.15rem 0.25rem;
       max-width: calc(100vw - 3rem);
       box-sizing: border-box;
     }
@@ -391,9 +454,9 @@
   /* Medium screens (tablets) */
   @media (min-width: 641px) and (max-width: 1024px) {
     .otp-code {
-      font-size: clamp(1rem, 3vw, 1.6rem);
-      padding: 0.75rem 1rem;
-      margin: 0.375rem 0.5rem;
+      font-size: clamp(0.875rem, 2vw, 1.25rem);
+      padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(0.75rem, 2vw, 1rem);
+      margin: 0.25rem 0.375rem;
       max-width: calc(100vw - 2rem);
       box-sizing: border-box;
     }
@@ -402,18 +465,18 @@
   /* Large screens (desktops) */
   @media (min-width: 1025px) and (max-width: 1440px) {
     .otp-code {
-      font-size: clamp(1.6rem, 2.5vw, 2rem);
-      padding: 1rem 1.5rem;
-      margin: 0.5rem 0.75rem;
+      font-size: clamp(1rem, 1.5vw, 1.5rem);
+      padding: clamp(0.625rem, 1.5vw, 0.875rem) clamp(0.875rem, 2vw, 1.25rem);
+      margin: 0.375rem 0.5rem;
     }
   }
 
   /* Extra large screens (large desktops) */
   @media (min-width: 1441px) {
     .otp-code {
-      font-size: clamp(1.8rem, 2vw, 2.2rem);
-      padding: 1.125rem 1.75rem;
-      margin: 0.625rem 1rem;
+      font-size: clamp(1.125rem, 1.25vw, 1.75rem);
+      padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.5rem);
+      margin: 0.5rem 0.75rem;
     }
   }
 
