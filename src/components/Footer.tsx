@@ -66,7 +66,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground text-lg">Support</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Help Center</a></li>
+              <li><Link to="/help-center" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Help Center</Link></li>
               <li><Link to="/contact" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Contact Us</Link></li>
               <li><a href="#" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">API Docs</a></li>
               <li><a href="#" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Status</a></li>
