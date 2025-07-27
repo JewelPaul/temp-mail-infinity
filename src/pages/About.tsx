@@ -1,14 +1,8 @@
-import { Shield, Zap, Globe, Lock, RefreshCw, Mail, Users, Award, Clock } from "lucide-react";
+import { Shield, Zap, Globe, Lock, RefreshCw, Mail, Users, Clock } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const About = () => {
-  const stats = [
-    { icon: Users, number: "500K+", label: "Active Users", description: "Trusted by users worldwide" },
-    { icon: Mail, number: "10M+", label: "Emails Generated", description: "Protecting privacy daily" },
-    { icon: Clock, number: "99.9%", label: "Uptime", description: "Reliable service guarantee" },
-    { icon: Award, number: "5★", label: "User Rating", description: "Highly rated by users" }
-  ];
 
   const features = [
     {
@@ -82,38 +76,74 @@ const About = () => {
           </div>
         </section>
 
-        {/* Stats Section */}
+        {/* Our Vision Section */}
         <section className="py-16 sm:py-20">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Trusted by Users Worldwide
+              Building Trust Through Transparency
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Join millions of users who trust BravoMail to protect their privacy online
+              We're building BravoMail step by step, with real users and honest growth
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="text-center p-6 bg-gradient-card border border-border/10 rounded-xl hover:border-primary/20 transition-smooth animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <stat.icon className="w-6 h-6 text-white" />
-                </div>
-                <div className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
-                  {stat.number}
-                </div>
-                <div className="font-semibold text-foreground mb-1">
-                  {stat.label}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {stat.description}
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-card border border-border/10 rounded-2xl p-8">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold mb-6">Our Growth Journey</h3>
+                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                  We believe in honest growth and building trust with our users. Instead of inflated numbers, 
+                  we're focused on providing real value and reaching meaningful milestones together.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center p-4">
+                    <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mx-auto mb-4">
+                      <Users className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
+                      10K
+                    </div>
+                    <div className="font-semibold text-foreground mb-1">
+                      User Goal 2024
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Growing our community
+                    </div>
+                  </div>
+                  
+                  <div className="text-center p-4">
+                    <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mx-auto mb-4">
+                      <Clock className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
+                      99.9%
+                    </div>
+                    <div className="font-semibold text-foreground mb-1">
+                      Uptime Target
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Reliable service goal
+                    </div>
+                  </div>
+                  
+                  <div className="text-center p-4">
+                    <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mx-auto mb-4">
+                      <Shield className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
+                      0
+                    </div>
+                    <div className="font-semibold text-foreground mb-1">
+                      Personal Data
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      We don't store it
+                    </div>
+                  </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </section>
 
