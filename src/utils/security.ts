@@ -1,26 +1,90 @@
 // Security utilities for protecting the application from inspection and unauthorized access
 
 export const initializeSecurityProtections = () => {
-  // Disable right-click context menu
+  // Function to check if element is in an inbox area
+  const isInInboxArea = (element: Element | null): boolean => {
+    if (!element) return false;
+    
+    // Allow selection in elements with these classes or data attributes
+    const allowedSelectors = [
+      '.email-content-area',      // Main email content
+      '.inbox-selectable',        // Explicitly marked inbox areas
+      '.otp-code',               // OTP codes
+      '[data-allow-selection="true"]', // Elements explicitly allowing selection
+    ];
+    
+    // Check if the element or any parent has allowed classes
+    let current: Element | null = element;
+    while (current && current !== document.body) {
+      // Check class names and data attributes
+      if (allowedSelectors.some(selector => {
+        if (selector.startsWith('.')) {
+          return current!.classList && current!.classList.contains(selector.slice(1));
+        } else if (selector.startsWith('[data-')) {
+          const attr = selector.slice(1, -1).split('=')[0];
+          return current!.hasAttribute && current!.hasAttribute(attr);
+        }
+        return false;
+      })) {
+        return true;
+      }
+      current = current.parentElement;
+    }
+    
+    return false;
+  };
+
+  // Selective right-click context menu disable
   document.addEventListener('contextmenu', (e) => {
+    const target = e.target as Element;
+    
+    // Allow right-click in inbox areas for copying
+    if (isInInboxArea(target)) {
+      return true;
+    }
+    
     e.preventDefault();
     return false;
   });
 
-  // Disable text selection
+  // Selective text selection disable
   document.addEventListener('selectstart', (e) => {
+    const target = e.target as Element;
+    
+    // Allow text selection in inbox areas
+    if (isInInboxArea(target)) {
+      return true;
+    }
+    
     e.preventDefault();
     return false;
   });
 
-  // Disable drag and drop
+  // Selective drag and drop disable
   document.addEventListener('dragstart', (e) => {
+    const target = e.target as Element;
+    
+    // Allow drag only for specific inbox content (like copying text)
+    if (isInInboxArea(target)) {
+      return true;
+    }
+    
     e.preventDefault();
     return false;
   });
 
   // Block common developer tools shortcuts
   document.addEventListener('keydown', (e) => {
+    const target = e.target as Element;
+    
+    // Allow copy shortcuts in inbox areas
+    if (isInInboxArea(target)) {
+      // Allow Ctrl+C (copy), Ctrl+A (select all) in inbox
+      if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A')) {
+        return true;
+      }
+    }
+    
     // Block F12
     if (e.key === 'F12') {
       e.preventDefault();
@@ -57,15 +121,15 @@ export const initializeSecurityProtections = () => {
       return false;
     }
 
-    // Block Ctrl+A (Select all) in some contexts
-    if (e.ctrlKey && e.key === 'a' && e.target instanceof HTMLInputElement === false) {
+    // Block Ctrl+A (Select all) in non-inbox contexts
+    if (e.ctrlKey && e.key === 'a' && !isInInboxArea(target)) {
       e.preventDefault();
       return false;
     }
   });
 
   // Detect developer tools by checking for console debugging
-  let devtools = {
+  const devtools = {
     open: false,
   };
 
@@ -132,7 +196,7 @@ export const sanitizeError = (error: unknown): string => {
     message = message.replace(/https?:\/\/[^\s]+/g, '[URL_REDACTED]');
     
     // Remove email addresses
-    message = message.replace(/[\w\.-]+@[\w\.-]+\.\w+/g, '[EMAIL_REDACTED]');
+    message = message.replace(/[\w.-]+@[\w.-]+\.\w+/g, '[EMAIL_REDACTED]');
     
     // Remove API keys or tokens
     message = message.replace(/[a-zA-Z0-9]{32,}/g, '[TOKEN_REDACTED]');

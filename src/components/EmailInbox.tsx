@@ -140,7 +140,7 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
           </div>
         </CardHeader>
 
-        <CardContent className="p-4 sm:p-6">
+        <CardContent className="p-4 sm:p-6 email-content-area inbox-selectable" data-allow-selection="true">
           {/* Error Display */}
           {error && (
             <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg mb-4">
@@ -170,9 +170,10 @@ const EmailInbox = ({ currentAccount }: EmailInboxProps) => {
               {emails.map((email) => (
                 <div
                   key={email.id}
-                  className={`group p-3 sm:p-4 rounded-lg border border-border/20 transition-all hover:shadow-md hover:border-primary/20 cursor-pointer ${
+                  className={`group p-3 sm:p-4 rounded-lg border border-border/20 transition-all hover:shadow-md hover:border-primary/20 cursor-pointer inbox-selectable ${
                     email.seen ? 'bg-background/30' : 'bg-background/60 border-primary/30'
                   }`}
+                  data-allow-selection="true"
                   onClick={() => handleEmailClick(email)}
                 >
                   <div className="flex items-start justify-between gap-3">

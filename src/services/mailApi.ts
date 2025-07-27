@@ -44,7 +44,32 @@ const MOCK_DOMAINS: Domain[] = [
   { id: '2', domain: 'temp-email.net', isActive: true }
 ];
 
-const MOCK_MESSAGES: EmailMessage[] = [];
+const MOCK_MESSAGES: EmailMessage[] = [
+  {
+    id: 'mock_1',
+    from: {
+      name: 'Security Team',
+      address: 'noreply@secureapp.com'
+    },
+    subject: 'Your Verification Code',
+    intro: 'Your verification code is 123456. This code will expire in 10 minutes.',
+    seen: false,
+    createdAt: new Date().toISOString(),
+    size: 1024
+  },
+  {
+    id: 'mock_2', 
+    from: {
+      name: 'TechCorp',
+      address: 'support@techcorp.com'
+    },
+    subject: 'Login Verification Required',
+    intro: 'Your security code: ABC123. Please use this code to complete your login.',
+    seen: false,
+    createdAt: new Date(Date.now() - 300000).toISOString(), // 5 minutes ago
+    size: 856
+  }
+];
 
 class MailApi {
   private currentAccount: EmailAccount | null = null;
@@ -184,8 +209,8 @@ class MailApi {
 
   private async mockGetMessages(): Promise<EmailMessage[]> {
     await this.mockDelay(600);
-    // Always return empty array - no demo/fake emails
-    return [];
+    // Return the mock messages for demo
+    return MOCK_MESSAGES;
   }
 
   private async mockGetMessage(id: string): Promise<EmailContent> {
@@ -193,10 +218,74 @@ class MailApi {
     const message = MOCK_MESSAGES.find(m => m.id === id);
     if (!message) throw new Error('Message not found');
     
+    // Create enhanced content with OTP codes
+    let htmlContent = '';
+    let textContent = '';
+    
+    if (id === 'mock_1') {
+      htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2 style="color: #2563eb;">Your Verification Code</h2>
+          <p>Hi there,</p>
+          <p>You've requested a verification code for your account. Please use the code below to complete your verification:</p>
+          <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+            <p style="margin: 0; font-size: 16px; color: #6b7280;">Your verification code is:</p>
+            <div style="font-size: 32px; font-weight: bold; color: #1f2937; margin: 10px 0; letter-spacing: 4px;">123456</div>
+            <p style="margin: 0; font-size: 14px; color: #6b7280;">This code will expire in 10 minutes</p>
+          </div>
+          <p>If you didn't request this code, please ignore this email.</p>
+          <p>Best regards,<br>Security Team</p>
+        </div>
+      `;
+      textContent = `Your Verification Code
+
+Hi there,
+
+You've requested a verification code for your account. Please use the code below to complete your verification:
+
+Your verification code is: 123456
+
+This code will expire in 10 minutes.
+
+If you didn't request this code, please ignore this email.
+
+Best regards,
+Security Team`;
+    } else if (id === 'mock_2') {
+      htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2 style="color: #059669;">Login Verification Required</h2>
+          <p>Hello,</p>
+          <p>We detected a login attempt to your TechCorp account. For your security, please verify this login using the code below:</p>
+          <div style="background: #ecfdf5; border: 2px solid #10b981; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+            <p style="margin: 0; font-size: 16px; color: #065f46;">Security Code:</p>
+            <div style="font-size: 28px; font-weight: bold; color: #065f46; margin: 10px 0; letter-spacing: 2px;">ABC123</div>
+            <p style="margin: 0; font-size: 14px; color: #065f46;">Valid for 15 minutes</p>
+          </div>
+          <p>If this wasn't you, please contact our support team immediately.</p>
+          <p>Thank you,<br>TechCorp Support Team</p>
+        </div>
+      `;
+      textContent = `Login Verification Required
+
+Hello,
+
+We detected a login attempt to your TechCorp account. For your security, please verify this login using the code below:
+
+Security Code: ABC123
+
+Valid for 15 minutes.
+
+If this wasn't you, please contact our support team immediately.
+
+Thank you,
+TechCorp Support Team`;
+    }
+    
     return {
       ...message,
-      html: [`<p>${message.intro}</p><p>This is a demo message in BravoMail.</p>`],
-      text: `${message.intro}\n\nThis is a demo message in BravoMail.`
+      html: [htmlContent],
+      text: textContent
     };
   }
 
