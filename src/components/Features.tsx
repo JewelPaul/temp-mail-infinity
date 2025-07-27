@@ -25,7 +25,7 @@ const Features = () => {
     {
       icon: Lock,
       title: "Auto-Secure",
-      description: "Emails automatically expire after 60 minutes for maximum security and privacy."
+      description: "Emails automatically expire after 10 minutes for maximum security and privacy."
     },
     {
       icon: Mail,
