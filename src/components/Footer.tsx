@@ -68,8 +68,6 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><Link to="/help-center" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Help Center</Link></li>
               <li><Link to="/contact" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Contact Us</Link></li>
-              <li><a href="#" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">API Docs</a></li>
-              <li><a href="#" className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-smooth py-1 block">Status</a></li>
             </ul>
           </div>
         </div>
