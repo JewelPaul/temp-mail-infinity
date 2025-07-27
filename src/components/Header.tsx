@@ -31,6 +31,9 @@ const Header = () => {
             <Link to="/#features" className="text-muted-foreground hover:text-primary transition-smooth">
               Features
             </Link>
+            <Link to="/articles" className="text-muted-foreground hover:text-primary transition-smooth">
+              Articles
+            </Link>
             <Link to="/about" className="text-muted-foreground hover:text-primary transition-smooth">
               About
             </Link>
@@ -62,6 +65,13 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 Features
+              </Link>
+              <Link 
+                to="/articles" 
+                className="text-muted-foreground hover:text-primary transition-smooth py-2 text-lg"
+                onClick={closeMenu}
+              >
+                Articles
               </Link>
               <Link 
                 to="/about" 
