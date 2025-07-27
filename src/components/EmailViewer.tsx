@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Mail } from "lucide-react";
+import { ArrowLeft, Mail, Copy, Check } from "lucide-react";
 import { EmailContent } from "@/services/mailApi";
+import { useToast } from "@/hooks/use-toast";
+import { useState, useEffect, useRef } from "react";
+import { detectOTPs, highlightOTPs } from "@/utils/otpDetection";
 
 interface EmailViewerProps {
   email: EmailContent;
@@ -9,9 +12,81 @@ interface EmailViewerProps {
 }
 
 const EmailViewer = ({ email, onBack }: EmailViewerProps) => {
+  const [copiedOTP, setCopiedOTP] = useState<string>("");
+  const contentRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
+
   const formatTimestamp = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleString();
+  };
+
+  // Handle OTP copy functionality
+  const handleOTPCopy = async (otpCode: string) => {
+    try {
+      await navigator.clipboard.writeText(otpCode);
+      setCopiedOTP(otpCode);
+      toast({
+        title: "OTP Copied!",
+        description: `Code "${otpCode}" copied to clipboard`,
+      });
+      
+      // Reset copied state after 2 seconds
+      setTimeout(() => setCopiedOTP(""), 2000);
+    } catch (err) {
+      console.error('Failed to copy OTP:', err);
+      toast({
+        title: "Copy Failed",
+        description: "Unable to copy OTP to clipboard",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Set up click handlers for OTP codes after content is rendered
+  useEffect(() => {
+    if (!contentRef.current) return;
+
+    const otpElements = contentRef.current.querySelectorAll('.otp-code');
+    
+    const handleOTPClick = (event: Event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      const otpElement = event.target as HTMLElement;
+      const otpCode = otpElement.getAttribute('data-otp') || otpElement.textContent || '';
+      
+      if (otpCode) {
+        handleOTPCopy(otpCode);
+      }
+    };
+
+    otpElements.forEach(element => {
+      element.addEventListener('click', handleOTPClick);
+    });
+
+    // Cleanup
+    return () => {
+      otpElements.forEach(element => {
+        element.removeEventListener('click', handleOTPClick);
+      });
+    };
+  }, [email.html, email.text]);
+
+  // Process email content to highlight OTPs
+  const processEmailContent = () => {
+    if (email.html && email.html.length > 0) {
+      const htmlContent = email.html.join('');
+      return highlightOTPs(htmlContent);
+    } else if (email.text) {
+      // For plain text, convert to HTML and then highlight
+      const htmlContent = email.text.replace(/\n/g, '<br>');
+      return highlightOTPs(htmlContent);
+    } else {
+      // Fallback to intro
+      const htmlContent = email.intro.replace(/\n/g, '<br>');
+      return highlightOTPs(htmlContent);
+    }
   };
 
   return (
@@ -64,27 +139,19 @@ const EmailViewer = ({ email, onBack }: EmailViewerProps) => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Message Content</h3>
             
-            {/* HTML Content */}
-            {email.html && email.html.length > 0 ? (
-              <div className="prose prose-sm max-w-none">
-                <div 
-                  className="p-4 bg-background/30 rounded-lg border border-border/20 min-h-[200px]"
-                  dangerouslySetInnerHTML={{ 
-                    __html: email.html.join('') 
-                  }}
-                />
-              </div>
-            ) : email.text ? (
-              /* Text Content */
-              <div className="p-4 bg-background/30 rounded-lg border border-border/20 min-h-[200px]">
-                <pre className="whitespace-pre-wrap text-sm font-mono">{email.text}</pre>
-              </div>
-            ) : (
-              /* Fallback to intro */
-              <div className="p-4 bg-background/30 rounded-lg border border-border/20 min-h-[200px]">
-                <p className="text-sm">{email.intro}</p>
-              </div>
-            )}
+            {/* Enhanced content with OTP detection */}
+            <div 
+              ref={contentRef}
+              className="email-content-area inbox-selectable prose prose-sm max-w-none"
+              data-allow-selection="true"
+            >
+              <div 
+                className="p-4 bg-background/30 rounded-lg border border-border/20 min-h-[200px] select-text"
+                dangerouslySetInnerHTML={{ 
+                  __html: processEmailContent()
+                }}
+              />
+            </div>
           </div>
 
           {/* Email Info */}
