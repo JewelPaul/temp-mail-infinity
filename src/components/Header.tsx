@@ -28,15 +28,15 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#features" className="text-muted-foreground hover:text-primary transition-smooth">
+            <Link to="/#features" className="text-muted-foreground hover:text-primary transition-smooth">
               Features
-            </a>
-            <a href="#about" className="text-muted-foreground hover:text-primary transition-smooth">
+            </Link>
+            <Link to="/about" className="text-muted-foreground hover:text-primary transition-smooth">
               About
-            </a>
-            <a href="#faq" className="text-muted-foreground hover:text-primary transition-smooth">
+            </Link>
+            <Link to="/faq" className="text-muted-foreground hover:text-primary transition-smooth">
               FAQ
-            </a>
+            </Link>
             <Link to="/contact" className="text-muted-foreground hover:text-primary transition-smooth">
               Contact
             </Link>
@@ -56,27 +56,27 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden mt-4 py-4 border-t border-border/10">
             <nav className="flex flex-col space-y-4">
-              <a 
-                href="#features" 
+              <Link 
+                to="/#features" 
                 className="text-muted-foreground hover:text-primary transition-smooth py-2 text-lg"
                 onClick={closeMenu}
               >
                 Features
-              </a>
-              <a 
-                href="#about" 
+              </Link>
+              <Link 
+                to="/about" 
                 className="text-muted-foreground hover:text-primary transition-smooth py-2 text-lg"
                 onClick={closeMenu}
               >
                 About
-              </a>
-              <a 
-                href="#faq" 
+              </Link>
+              <Link 
+                to="/faq" 
                 className="text-muted-foreground hover:text-primary transition-smooth py-2 text-lg"
                 onClick={closeMenu}
               >
                 FAQ
-              </a>
+              </Link>
               <Link 
                 to="/contact" 
                 className="text-muted-foreground hover:text-primary transition-smooth py-2 text-lg"
