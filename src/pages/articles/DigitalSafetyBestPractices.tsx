@@ -42,7 +42,7 @@ const DigitalSafetyBestPractices = () => {
                   </div>
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-2" />
-                    January 5, 2024
+                    April 10, 2025
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-4 h-4 mr-2" />

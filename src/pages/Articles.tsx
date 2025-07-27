@@ -12,7 +12,7 @@ const Articles = () => {
       title: "The Importance of Temporary Email for Privacy and Security",
       description: "Learn how temporary email addresses protect your personal information and maintain your online privacy in an increasingly connected world.",
       author: "BravoMail Security Team",
-      date: "2024-01-15",
+      date: "2025-04-20",
       readTime: "5 min read",
       category: "Privacy",
       excerpt: "In today's digital landscape, protecting your personal email address is more crucial than ever. Discover why temporary email is essential for maintaining your privacy and security online."
@@ -22,7 +22,7 @@ const Articles = () => {
       title: "How Disposable Email Helps Prevent Spam and Phishing",
       description: "Understand the mechanisms behind spam and phishing attacks, and learn how disposable email addresses serve as your first line of defense.",
       author: "BravoMail Security Team", 
-      date: "2024-01-10",
+      date: "2025-04-15",
       readTime: "6 min read",
       category: "Security",
       excerpt: "Spam and phishing attacks are becoming increasingly sophisticated. Learn how temporary email addresses can protect you from these threats and keep your inbox clean."
@@ -32,7 +32,7 @@ const Articles = () => {
       title: "Best Practices for Digital Safety and Using Temporary Email Responsibly",
       description: "A comprehensive guide to digital safety practices and how to effectively use temporary email services while maintaining responsible online behavior.",
       author: "BravoMail Security Team",
-      date: "2024-01-05", 
+      date: "2025-04-10", 
       readTime: "8 min read",
       category: "Best Practices",
       excerpt: "Maximize your digital safety with proven best practices for temporary email usage. Learn when and how to use disposable email addresses effectively."
