@@ -230,6 +230,28 @@ export const initializeEzoic = (): void => {
     };
   }
 
+  // Wait for Ezoic scripts to load in production
+  if (!ezoicConfig.testMode) {
+    const checkEzoicReady = () => {
+      if (window.ezstandalone && typeof window.ezstandalone.cmd !== 'undefined') {
+        // Initialize ad placements when Ezoic is ready
+        window.ezstandalone.cmd.push(() => {
+          Object.values(adSlots).forEach(slot => {
+            if (window.ezstandalone) {
+              window.ezstandalone.define(slot.ezoicId, [slot.dimensions]);
+            }
+          });
+        });
+      } else {
+        // Retry in 100ms if Ezoic isn't ready yet
+        setTimeout(checkEzoicReady, 100);
+      }
+    };
+    
+    // Start checking after a brief delay
+    setTimeout(checkEzoicReady, 500);
+  }
+
   // Setup debug mode if enabled
   if (ezoicConfig.enableDebug && typeof URLSearchParams !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
