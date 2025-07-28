@@ -1,0 +1,25 @@
+# Ezoic Ads.txt Configuration for bravomail.email
+# This file contains authorized digital sellers for this domain
+
+# Ezoic Direct Entries
+ezoic.com, 160, DIRECT
+ezoic.com, bravomail, DIRECT, 6500f05b26e3098b
+
+# Google AdSense Reseller Entries  
+google.com, pub-6500f05b26e3098b, RESELLER, f08c47fec0942fa0
+googlesyndication.com, 6500f05b26e3098b, RESELLER, f08c47fec0942fa0
+
+# Amazon Reseller Entries
+amazon.com, 3211, RESELLER
+amazon.co.uk, 3211, RESELLER
+
+# Other Major SSP/DSP Reseller Entries
+appnexus.com, 1908, RESELLER, f5ab79cb980f11d1
+rubiconproject.com, 20014, RESELLER, 0bfd66d529a55807
+openx.com, 537120563, RESELLER, 6a698e2ec38604c6
+pubmatic.com, 156439, RESELLER, 5d62403b186f2ace
+sovrn.com, 257611, RESELLER, fafdf38b16bf6b2b
+lijit.com, 257611, RESELLER, fafdf38b16bf6b2b
+
+# This file is automatically managed by Ezoic
+# Last updated: Dynamic content from Ezoic servers
