@@ -72,7 +72,7 @@
 
 ### **📞 Support & Contact**
 
-- **🌐 Official Website**: [https://bravomail.com](https://bravomail.email)
+- **🌐 Official Website**: [https://bravomail.email](https://bravomail.email)
 
 ---
 
@@ -92,7 +92,7 @@
 
 #### **✅ Permitted Activities:**
 - **Viewing Only**: Repository may be viewed for reference purposes only
-- **Official Website Use**: Full functionality available through [bravomail.com](https://bravomail.email)
+- **Official Website Use**: Full functionality available through [bravomail.email](https://bravomail.email)
 
 ### **⚖️ Legal Enforcement**
 
@@ -121,7 +121,7 @@ BravoMail offers enterprise-grade solutions for businesses requiring secure temp
 
 ### **Simple 3-Step Process:**
 
-1. **🌐 Visit**: Go to [bravomail.com](https://bravomail.email)
+1. **🌐 Visit**: Go to [bravomail.email](https://bravomail.email)
 2. **📧 Generate**: Click to create instant temporary email
 3. **✅ Use**: Use the email for signups, verification, or testing
 
