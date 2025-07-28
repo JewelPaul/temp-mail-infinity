@@ -6,7 +6,7 @@
 
 ---
 
-## 🌟 **[🚀 USE BRAVOMAIL LIVE WEBSITE →](https://bravomail.com)**
+## 🌟 **[🚀 USE BRAVOMAIL LIVE WEBSITE →](https://bravomail.email)**
 
 **⚠️ IMPORTANT: This repository is for display purposes only. All functionality is exclusively available through our official website.**
 
@@ -60,7 +60,7 @@
 
 ## 🌐 **Live Website Access**
 
-### **🚀 [Access BravoMail Official Website](https://bravomail.com)**
+### **🚀 [Access BravoMail Official Website](https://bravomail.email)**
 
 **All BravoMail functionality is exclusively available through our official website. The website provides:**
 
@@ -72,11 +72,7 @@
 
 ### **📞 Support & Contact**
 
-- **🌐 Official Website**: [https://bravomail.com](https://bravomail.com)
-- **📧 Support Email**: support@bravomail.com
-- **💬 Live Chat**: Available on official website
-- **📞 Business Inquiries**: business@bravomail.com
-- **🛡️ Security Reports**: security@bravomail.com
+- **🌐 Official Website**: [https://bravomail.com](https://bravomail.email)
 
 ---
 
@@ -96,7 +92,7 @@
 
 #### **✅ Permitted Activities:**
 - **Viewing Only**: Repository may be viewed for reference purposes only
-- **Official Website Use**: Full functionality available through [bravomail.com](https://bravomail.com)
+- **Official Website Use**: Full functionality available through [bravomail.com](https://bravomail.email)
 
 ### **⚖️ Legal Enforcement**
 
@@ -119,15 +115,13 @@ BravoMail offers enterprise-grade solutions for businesses requiring secure temp
 - **👥 Team Management**: Multi-user business accounts
 - **🔐 Enhanced Security**: Additional security layers for business
 
-**Contact**: business@bravomail.com
-
 ---
 
 ## 📱 **How to Use BravoMail**
 
 ### **Simple 3-Step Process:**
 
-1. **🌐 Visit**: Go to [bravomail.com](https://bravomail.com)
+1. **🌐 Visit**: Go to [bravomail.com](https://bravomail.email)
 2. **📧 Generate**: Click to create instant temporary email
 3. **✅ Use**: Use the email for signups, verification, or testing
 
@@ -186,7 +180,7 @@ A: Yes! Our website works perfectly on all devices and platforms.
 
 ## 🚀 **Start Using BravoMail Today!**
 
-### **[🌟 Get Your Temporary Email Now →](https://bravomail.com)**
+### **[🌟 Get Your Temporary Email Now →](https://bravomail.email)**
 
 **Join our growing community of users who trust BravoMail for their privacy and security needs. Our goal: 10,000 users this year!**
 
@@ -196,8 +190,8 @@ A: Yes! Our website works perfectly on all devices and platforms.
 
 This project is protected under a proprietary license. See the [LICENSE](./LICENSE) file for details.
 
-**© 2024 BravoMail. All Rights Reserved.**
+**© 2025 BravoMail. All Rights Reserved.**
 
 ---
 
-**⚠️ Remember: Only use BravoMail through our official website [bravomail.com](https://bravomail.com) for security and full functionality.**
+**⚠️ Remember: Only use BravoMail through our official website [bravomail.com](https://bravomail.email) for security and full functionality.**
