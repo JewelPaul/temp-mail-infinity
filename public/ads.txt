@@ -1,8 +1,16 @@
-# Ezoic ads.txt template
-# Replace this with your actual Ezoic seller entries from your Ezoic dashboard.
+# Ezoic Ads.txt Configuration for bravomail.email
+# Authorized digital sellers for ad monetization
 
-# Example (DO NOT USE unless confirmed by Ezoic):
-# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
-# appnexus.com, 12345, DIRECT, 123456789
+# Ezoic Direct Entry
+ezoic.com, 76964, DIRECT
 
-# Visit your Ezoic Ads.txt Manager and copy your personalized entries here.
+# Google AdSense Integration via Ezoic
+google.com, pub-8571500634313110, RESELLER, f08c47fec0942fa0
+
+# Additional Ezoic Network Partners
+appnexus.com, 13099, RESELLER, f5ab79cb980f11d1
+openx.com, 540393169, RESELLER, 6a698e2ec38604c6
+pubmatic.com, 158723, RESELLER, 5d62403b186f2ace
+rubiconproject.com, 20266, RESELLER, 0bfd66d529a55807
+sovrn.com, 273657, RESELLER, fafdf38b16bf6b2b
+lijit.com, 273657, RESELLER, fafdf38b16bf6b2b
