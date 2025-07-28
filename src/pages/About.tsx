@@ -1,6 +1,8 @@
 import { Shield, Zap, Globe, Lock, RefreshCw, Mail, Users, Clock } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import EzoicAd from "@/components/EzoicAd";
+import { adSlots } from "@/lib/ezoic-config";
 
 const About = () => {
 
@@ -43,6 +45,16 @@ const About = () => {
               while providing a seamless experience for all your temporary email needs.
             </p>
           </div>
+        </section>
+
+        {/* Advertisement - Header */}
+        <section className="flex justify-center py-8">
+          <EzoicAd 
+            id={adSlots.header.id}
+            className="w-full max-w-4xl"
+            style={{ minHeight: adSlots.header.minHeight }}
+            size={adSlots.header.size}
+          />
         </section>
 
         {/* Mission Section */}

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp, Shield, Clock, Mail, HelpCircle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import EzoicAd from "@/components/EzoicAd";
+import { adSlots } from "@/lib/ezoic-config";
 
 interface FAQItem {
   question: string;
@@ -173,6 +175,16 @@ const FAQ = () => {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* Advertisement - Banner */}
+        <section className="flex justify-center py-8">
+          <EzoicAd 
+            id={adSlots.main.id}
+            className="w-full max-w-4xl"
+            style={{ minHeight: adSlots.main.minHeight }}
+            size={adSlots.main.size}
+          />
         </section>
 
         {/* Contact Section */}
