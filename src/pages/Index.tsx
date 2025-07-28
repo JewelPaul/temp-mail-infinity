@@ -4,6 +4,7 @@ import EmailGenerator from "@/components/EmailGenerator";
 import EmailInbox from "@/components/EmailInbox";
 import Features from "@/components/Features";
 import Footer from "@/components/Footer";
+import EzoicAd from "@/components/EzoicAd";
 import { EmailAccount } from "@/services/mailApi";
 
 const Index = () => {
@@ -22,6 +23,15 @@ const Index = () => {
         {/* Email Inbox */}
         <section>
           <EmailInbox currentAccount={currentAccount} />
+        </section>
+
+        {/* Advertisement */}
+        <section className="flex justify-center">
+          <EzoicAd 
+            id="bravomail-main-banner" 
+            className="w-full max-w-4xl"
+            style={{ minHeight: '250px' }}
+          />
         </section>
 
         {/* Features Section */}
