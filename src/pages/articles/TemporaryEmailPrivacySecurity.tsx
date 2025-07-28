@@ -42,7 +42,7 @@ const TemporaryEmailPrivacySecurity = () => {
                   </div>
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-2" />
-                    January 15, 2024
+                    April 20, 2025
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-4 h-4 mr-2" />

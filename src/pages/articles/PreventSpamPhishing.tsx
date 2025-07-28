@@ -42,7 +42,7 @@ const PreventSpamPhishing = () => {
                   </div>
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-2" />
-                    January 10, 2024
+                    April 15, 2025
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-4 h-4 mr-2" />
