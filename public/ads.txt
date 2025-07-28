@@ -1,0 +1,17 @@
+# Ezoic Ads.txt Configuration
+# Replace this placeholder with actual ads.txt content provided by Ezoic
+# 
+# This file should contain authorized digital sellers for this domain
+# Format: <FIELD #1>, <FIELD #2>, <FIELD #3>, <FIELD #4>
+# where:
+# FIELD #1: Domain name of the advertising system
+# FIELD #2: Publisher's Account ID
+# FIELD #3: Type of Account/Relationship 
+# FIELD #4: Certification Authority ID
+
+# Placeholder entries - replace with actual Ezoic provided values
+# ezoic.com, pub-example123456789, DIRECT, d4c29acad76ce94f
+# google.com, pub-example123456789, RESELLER, f08c47fec0942fa0
+
+# Note: Contact Ezoic support to get your specific ads.txt entries
+# This file will be accessible at: https://yourdomain.com/ads.txt
